@@ -6,12 +6,12 @@
     --il-accent-orange: #FF6B35;
     --il-accent-orange-hover: #ff8557;
     --il-card-bg: #ffffff;
-    --il-section-bg: #0f1a3e;
+    --il-section-bg: #ffffff;
     --il-input-bg: #f0f2f8;
     --il-text-dark: #1a2550;
     --il-text-muted: #8e9cb2;
-    --il-text-light: #ffffff;
-    --il-font-main: 'Montserrat', sans-serif;
+    --il-text-light: #1a2550;
+    --il-font-main: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --il-transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     background-color: var(--il-section-bg) !important;
@@ -46,20 +46,22 @@
 }
 
 .inersialab-contact-heading {
-    font-size: 3.5rem !important;
-    font-weight: 800 !important;
-    line-height: 1.1 !important;
-    letter-spacing: -2px !important;
-    color: var(--il-text-light) !important;
-    margin: 0 0 24px 0 !important;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 46px !important;     
+    line-height: 1.25 !important;
+    color: #1C244B !important;
+    letter-spacing: -1px !important;
     text-transform: none !important;
+    margin: 0 0 24px 0 !important;
 }
 
 .inersialab-contact-desc {
-    font-size: 15px !important;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
     font-weight: 400 !important;
+    font-size: 14px !important;
     line-height: 1.65 !important;
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: #444444 !important;
     margin: 0 0 40px 0 !important;
     max-width: 460px !important;
 }
@@ -83,7 +85,7 @@
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 1.5px !important;
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(26, 37, 80, 0.6) !important;
 }
 
 .inersialab-info-value {
@@ -92,6 +94,8 @@
     color: var(--il-text-light) !important;
     text-decoration: none !important;
     transition: var(--il-transition-smooth) !important;
+    direction: ltr !important;
+    display: inline-block !important;
 }
 
 .inersialab-info-value:hover {
@@ -101,67 +105,97 @@
 .inersialab-contact-note {
     font-size: 12px !important;
     font-weight: 500 !important;
-    color: rgba(255, 255, 255, 0.5) !important;
-    margin-bottom: 24px !important;
+    color: rgba(26, 37, 80, 0.6) !important;
+    margin-bottom: 0 !important;
+}
+
+.inersialab-btn-livechat,
+.inersialab-btn-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    width: 192px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+    color: #060D14 !important;
+    border: 1.5px solid rgba(30, 58, 95, 0.12) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    font-family: var(--il-font-main) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    box-shadow: 0 4px 12px rgba(13, 27, 42, 0.05) !important;
 }
 
 .inersialab-btn-livechat {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    background-color: var(--il-primary-navy) !important;
-    color: var(--il-text-light) !important;
-    padding: 8px 8px 8px 24px !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    border-radius: 50px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-    transition: var(--il-transition-smooth) !important;
-    border: none !important;
-    cursor: pointer !important;
-    height: 50px !important;
-    line-height: 1 !important;
     margin-top: 10px !important;
 }
 
-.inersialab-btn-livechat:hover {
-    background-color: var(--il-accent-orange) !important;
-    color: var(--il-text-light) !important;
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35) !important;
-    transform: translateY(-2px) !important;
+.inersialab-btn-livechat:hover,
+.inersialab-btn-submit:hover {
+    border-color: transparent !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(244, 96, 54, 0.15) !important;
 }
 
-.inersialab-btn-livechat:active {
-    transform: translateY(0) !important;
+.inersialab-btn-livechat::before,
+.inersialab-btn-submit::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 4px !important;
+    top: 4px !important;
+    height: 48px !important; 
+    width: 48px !important;  
+    background-color: #F46036 !important;
+    border-radius: 12px !important;
+    z-index: 1 !important;
+    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-.btn-arrow-circle {
-    width: 34px !important;
-    height: 34px !important;
-    background-color: #ffffff !important;
-    color: var(--il-primary-navy) !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-left: 14px !important;
-    transition: var(--il-transition-smooth) !important;
-    flex-shrink: 0 !important;
+.inersialab-btn-livechat:hover::before,
+.inersialab-btn-submit:hover::before {
+    width: calc(100% - 8px) !important; 
 }
 
-.btn-arrow-circle svg {
-    width: 16px !important;
-    height: 16px !important;
-    transition: transform 0.3s ease !important;
+.inersialab-btn-livechat::after,
+.inersialab-btn-submit::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 16px !important; 
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 24px !important;
+    height: 24px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z' fill='%23ffffff'/%3E%3Cpath d='m786.752 512-265.408-265.344a32 32 0 0 1 45.312-45.312l288 288a32 32 0 0 1 0 45.312l-288 288a32 32 0 1 1-45.312-45.312L786.752 512z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    z-index: 2 !important;
+    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
-.inersialab-btn-livechat:hover .btn-arrow-circle {
-    color: var(--il-accent-orange) !important;
+.inersialab-btn-livechat:hover::after,
+.inersialab-btn-submit:hover::after {
+    left: 50% !important; 
+    transform: translate(-50%, -50%) !important;
 }
 
-.inersialab-btn-livechat:hover .btn-arrow-circle svg {
-    transform: translateX(3px) !important;
+.inersialab-btn-text {
+    display: inline-block !important;
+    transform: translateX(24px) !important;
+    opacity: 1 !important;
+    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    z-index: 3 !important;
+}
+
+.inersialab-btn-livechat:hover .inersialab-btn-text,
+.inersialab-btn-submit:hover .inersialab-btn-text {
+    transform: translateX(50px) !important;
+    opacity: 0 !important;
 }
 
 /* Right Column Card Styling */
@@ -177,7 +211,8 @@
     padding: 48px !important;
     width: 100% !important;
     max-width: 520px !important;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 20px 50px rgba(13, 27, 42, 0.08) !important;
+    border: 1px solid rgba(13, 27, 42, 0.06) !important;
 }
 
 /* Form Layout Components */
@@ -206,6 +241,7 @@
 .inersialab-form-control {
     background-color: var(--il-input-bg) !important;
     color: var(--il-text-dark) !important;
+    font-family: var(--il-font-main) !important;
     font-size: 14px !important;
     font-weight: 500 !important;
     border: 1px solid rgba(26, 37, 80, 0.08) !important;
@@ -230,6 +266,28 @@
 .inersialab-form-control.text-area {
     min-height: 140px !important;
     resize: vertical !important;
+}
+
+.inersialab-form-control.select-field {
+    font-family: var(--il-font-main) !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a2550' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 18px center !important;
+    background-size: 16px !important;
+    padding-right: 48px !important;
+    cursor: pointer !important;
+}
+
+
+
+/* RTL select field arrow positioning */
+.inersialab-rtl .inersialab-form-control.select-field {
+    background-position: left 18px center !important;
+    padding-left: 48px !important;
+    padding-right: 18px !important;
 }
 
 /* Input Error Message Styling */
@@ -261,48 +319,16 @@
     margin-top: 10px !important;
 }
 
-.inersialab-btn-submit {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    background-color: var(--il-primary-navy) !important;
-    color: var(--il-text-light) !important;
-    padding: 8px 8px 8px 24px !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    border-radius: 50px !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: var(--il-transition-smooth) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-    height: 50px !important;
-    line-height: 1 !important;
-}
-
-.inersialab-btn-submit:hover {
-    background-color: var(--il-accent-orange) !important;
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35) !important;
-    transform: translateY(-2px) !important;
-}
-
-.inersialab-btn-submit:active {
-    transform: translateY(0) !important;
-}
-
-.inersialab-btn-submit:hover .btn-arrow-circle {
-    color: var(--il-accent-orange) !important;
-}
-
-.inersialab-btn-submit:hover .btn-arrow-circle svg {
-    transform: translateX(3px) !important;
-}
-
 /* Disabled loading states */
 .inersialab-btn-submit:disabled {
     background-color: var(--il-text-muted) !important;
     box-shadow: none !important;
     cursor: not-allowed !important;
     transform: none !important;
+}
+
+.inersialab-btn-submit:disabled::before {
+    background-color: var(--il-text-muted) !important;
 }
 
 /* Form Ajax Response Styling */
@@ -340,24 +366,38 @@
 /* Responsive Rules */
 @media (max-width: 1024px) {
     .inersialab-contact-container {
-        gap: 48px !important;
+        gap: 40px !important;
     }
     .inersialab-contact-heading {
-        font-size: 3rem !important;
+        font-size: 38px !important;
     }
 }
 
 @media (max-width: 991px) {
     .inersialab-contact-container {
         grid-template-columns: 1fr !important;
-        gap: 50px !important;
+        gap: 32px !important;
     }
     .inersialab-contact-left {
         align-items: center !important;
         text-align: center !important;
     }
+    .inersialab-contact-heading {
+        margin-bottom: 16px !important;
+    }
     .inersialab-contact-desc {
         max-width: 100% !important;
+        margin-bottom: 24px !important;
+    }
+    .inersialab-contact-info-list {
+        gap: 16px !important;
+        margin-bottom: 20px !important;
+    }
+    .inersialab-info-item {
+        align-items: center !important;
+    }
+    .inersialab-contact-note {
+        margin-bottom: 0 !important;
     }
     .inersialab-contact-right {
         justify-content: center !important;
@@ -365,14 +405,30 @@
     .inersialab-contact-card {
         max-width: 100% !important;
     }
+    .inersialab-form-submit-row {
+        justify-content: center !important;
+    }
+    /* Centering submit button for Arabic RTL on mobile */
+    .inersialab-contact-section.inersialab-rtl .inersialab-form-submit-row {
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .inersialab-contact-heading {
+        font-size: 32px !important;
+    }
+    .inersialab-contact-container {
+        gap: 28px !important;
+    }
 }
 
 @media (max-width: 560px) {
     .inersialab-contact-section {
-        padding: 60px 0 !important;
+        padding: 48px 0 !important;
     }
-    .inersialab-contact-heading {
-        font-size: 2.3rem !important;
+    .inersialab-contact-container {
+        gap: 24px !important;
     }
     .inersialab-contact-card {
         padding: 30px 20px !important;
@@ -385,4 +441,59 @@
     .inersialab-info-value {
         font-size: 18px !important;
     }
+}
+
+@media (max-width: 480px) {
+    .inersialab-contact-heading {
+        font-size: 27px !important;
+        letter-spacing: -0.5px !important;
+    }
+}
+
+/* ==========================================
+   RTL (Arabic Layout overrides)
+   ========================================== */
+.inersialab-contact-section.inersialab-rtl {
+    direction: rtl !important;
+}
+
+.inersialab-contact-section.inersialab-rtl * {
+    text-align: right !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-contact-left {
+    align-items: flex-start !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-info-item {
+    align-items: flex-start !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-form-submit-row {
+    justify-content: flex-end !important;
+}
+
+/* RTL override for animated buttons sliding left instead of right */
+.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit::before {
+    left: auto !important;
+    right: 4px !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit::after {
+    left: auto !important;
+    right: 16px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M800 480H160a32 32 0 1 0 0 64h640a32 32 0 0 0 0-64z' fill='%23ffffff'/%3E%3Cpath d='m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit:hover::after {
+    right: 50% !important;
+    transform: translate(50%, -50%) !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-btn-text {
+    transform: translateX(-24px) !important;
+}
+
+.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit:hover .inersialab-btn-text {
+    transform: translateX(-50px) !important;
 }
