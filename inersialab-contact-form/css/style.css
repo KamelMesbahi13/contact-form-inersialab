@@ -1,0 +1,388 @@
+/* InersiaLab Contact Form Stylesheet */
+
+.inersialab-contact-section {
+    /* Design Tokens */
+    --il-primary-navy: #1a2550;
+    --il-accent-orange: #FF6B35;
+    --il-accent-orange-hover: #ff8557;
+    --il-card-bg: #ffffff;
+    --il-section-bg: #0f1a3e;
+    --il-input-bg: #f0f2f8;
+    --il-text-dark: #1a2550;
+    --il-text-muted: #8e9cb2;
+    --il-text-light: #ffffff;
+    --il-font-main: 'Montserrat', sans-serif;
+    --il-transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    background-color: var(--il-section-bg) !important;
+    font-family: var(--il-font-main) !important;
+    padding: 100px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden;
+}
+
+.inersialab-contact-section * {
+    box-sizing: border-box !important;
+    font-family: var(--il-font-main) !important;
+}
+
+.inersialab-contact-container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+    display: grid !important;
+    grid-template-columns: 1.1fr 1fr !important;
+    gap: 80px !important;
+    align-items: center !important;
+}
+
+/* Left Column Styling */
+.inersialab-contact-left {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    color: var(--il-text-light) !important;
+}
+
+.inersialab-contact-heading {
+    font-size: 3.5rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -2px !important;
+    color: var(--il-text-light) !important;
+    margin: 0 0 24px 0 !important;
+    text-transform: none !important;
+}
+
+.inersialab-contact-desc {
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 0 0 40px 0 !important;
+    max-width: 460px !important;
+}
+
+.inersialab-contact-info-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+    margin-bottom: 32px !important;
+    width: 100% !important;
+}
+
+.inersialab-info-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+.inersialab-info-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.inersialab-info-value {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: var(--il-text-light) !important;
+    text-decoration: none !important;
+    transition: var(--il-transition-smooth) !important;
+}
+
+.inersialab-info-value:hover {
+    color: var(--il-accent-orange) !important;
+}
+
+.inersialab-contact-note {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    margin-bottom: 24px !important;
+}
+
+.inersialab-btn-livechat {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: var(--il-primary-navy) !important;
+    color: var(--il-text-light) !important;
+    padding: 8px 8px 8px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    transition: var(--il-transition-smooth) !important;
+    border: none !important;
+    cursor: pointer !important;
+    height: 50px !important;
+    line-height: 1 !important;
+    margin-top: 10px !important;
+}
+
+.inersialab-btn-livechat:hover {
+    background-color: var(--il-accent-orange) !important;
+    color: var(--il-text-light) !important;
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35) !important;
+    transform: translateY(-2px) !important;
+}
+
+.inersialab-btn-livechat:active {
+    transform: translateY(0) !important;
+}
+
+.btn-arrow-circle {
+    width: 34px !important;
+    height: 34px !important;
+    background-color: #ffffff !important;
+    color: var(--il-primary-navy) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-left: 14px !important;
+    transition: var(--il-transition-smooth) !important;
+    flex-shrink: 0 !important;
+}
+
+.btn-arrow-circle svg {
+    width: 16px !important;
+    height: 16px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.inersialab-btn-livechat:hover .btn-arrow-circle {
+    color: var(--il-accent-orange) !important;
+}
+
+.inersialab-btn-livechat:hover .btn-arrow-circle svg {
+    transform: translateX(3px) !important;
+}
+
+/* Right Column Card Styling */
+.inersialab-contact-right {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+}
+
+.inersialab-contact-card {
+    background-color: var(--il-card-bg) !important;
+    border-radius: 28px !important;
+    padding: 48px !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Form Layout Components */
+.inersialab-form-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+}
+
+.inersialab-form-group {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-bottom: 24px !important;
+    position: relative !important;
+}
+
+.inersialab-form-label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--il-text-dark) !important;
+    margin-bottom: 8px !important;
+    text-align: left !important;
+    display: inline-block !important;
+}
+
+.inersialab-form-control {
+    background-color: var(--il-input-bg) !important;
+    color: var(--il-text-dark) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border: 1px solid rgba(26, 37, 80, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 14px 18px !important;
+    width: 100% !important;
+    outline: none !important;
+    transition: var(--il-transition-smooth) !important;
+}
+
+.inersialab-form-control::placeholder {
+    color: var(--il-text-muted) !important;
+    opacity: 1 !important;
+}
+
+.inersialab-form-control:focus {
+    background-color: var(--il-card-bg) !important;
+    border-color: var(--il-accent-orange) !important;
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15) !important;
+}
+
+.inersialab-form-control.text-area {
+    min-height: 140px !important;
+    resize: vertical !important;
+}
+
+/* Input Error Message Styling */
+.inersialab-error-msg {
+    color: #ff4d4d !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    margin-top: 5px !important;
+    margin-left: 4px !important;
+    min-height: 14px !important;
+    transition: opacity 0.2s ease !important;
+    opacity: 0;
+}
+
+.inersialab-form-control.invalid-field {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15) !important;
+}
+
+.inersialab-form-control.invalid-field:focus {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15) !important;
+}
+
+/* Submit Row Layout */
+.inersialab-form-submit-row {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-top: 10px !important;
+}
+
+.inersialab-btn-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: var(--il-primary-navy) !important;
+    color: var(--il-text-light) !important;
+    padding: 8px 8px 8px 24px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 50px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: var(--il-transition-smooth) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    height: 50px !important;
+    line-height: 1 !important;
+}
+
+.inersialab-btn-submit:hover {
+    background-color: var(--il-accent-orange) !important;
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.35) !important;
+    transform: translateY(-2px) !important;
+}
+
+.inersialab-btn-submit:active {
+    transform: translateY(0) !important;
+}
+
+.inersialab-btn-submit:hover .btn-arrow-circle {
+    color: var(--il-accent-orange) !important;
+}
+
+.inersialab-btn-submit:hover .btn-arrow-circle svg {
+    transform: translateX(3px) !important;
+}
+
+/* Disabled loading states */
+.inersialab-btn-submit:disabled {
+    background-color: var(--il-text-muted) !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* Form Ajax Response Styling */
+.inersialab-form-response {
+    margin-top: 20px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.inersialab-form-response.show-response {
+    padding: 16px 20px !important;
+    height: auto !important;
+    opacity: 1 !important;
+}
+
+.inersialab-form-response.success {
+    background-color: rgba(34, 197, 94, 0.12) !important;
+    color: #15803d !important;
+    border: 1px solid rgba(34, 197, 94, 0.25) !important;
+}
+
+.inersialab-form-response.error {
+    background-color: rgba(239, 68, 68, 0.12) !important;
+    color: #b91c1c !important;
+    border: 1px solid rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Responsive Rules */
+@media (max-width: 1024px) {
+    .inersialab-contact-container {
+        gap: 48px !important;
+    }
+    .inersialab-contact-heading {
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .inersialab-contact-container {
+        grid-template-columns: 1fr !important;
+        gap: 50px !important;
+    }
+    .inersialab-contact-left {
+        align-items: center !important;
+        text-align: center !important;
+    }
+    .inersialab-contact-desc {
+        max-width: 100% !important;
+    }
+    .inersialab-contact-right {
+        justify-content: center !important;
+    }
+    .inersialab-contact-card {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .inersialab-contact-section {
+        padding: 60px 0 !important;
+    }
+    .inersialab-contact-heading {
+        font-size: 2.3rem !important;
+    }
+    .inersialab-contact-card {
+        padding: 30px 20px !important;
+        border-radius: 16px !important;
+    }
+    .inersialab-form-row {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+    .inersialab-info-value {
+        font-size: 18px !important;
+    }
+}
