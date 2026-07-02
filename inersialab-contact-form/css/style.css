@@ -16,7 +16,7 @@
 
     background-color: var(--il-section-bg) !important;
     font-family: var(--il-font-main) !important;
-    padding: 100px 0 !important;
+    padding: 60px 0 !important;
     width: 100% !important;
     box-sizing: border-box !important;
     overflow: hidden;
@@ -208,7 +208,7 @@
 .inersialab-contact-card {
     background-color: var(--il-card-bg) !important;
     border-radius: 28px !important;
-    padding: 48px !important;
+    padding: 32px 36px !important;
     width: 100% !important;
     max-width: 520px !important;
     box-shadow: 0 20px 50px rgba(13, 27, 42, 0.08) !important;
@@ -225,7 +225,7 @@
 .inersialab-form-group {
     display: flex !important;
     flex-direction: column !important;
-    margin-bottom: 24px !important;
+    margin-bottom: 16px !important;
     position: relative !important;
 }
 
@@ -246,7 +246,7 @@
     font-weight: 500 !important;
     border: 1px solid rgba(26, 37, 80, 0.08) !important;
     border-radius: 12px !important;
-    padding: 14px 18px !important;
+    padding: 11px 16px !important;
     width: 100% !important;
     outline: none !important;
     transition: var(--il-transition-smooth) !important;
@@ -260,11 +260,10 @@
 .inersialab-form-control:focus {
     background-color: var(--il-card-bg) !important;
     border-color: var(--il-accent-orange) !important;
-    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15) !important;
 }
 
 .inersialab-form-control.text-area {
-    min-height: 140px !important;
+    min-height: 100px !important;
     resize: vertical !important;
 }
 
@@ -281,15 +280,6 @@
     cursor: pointer !important;
 }
 
-
-
-/* RTL select field arrow positioning */
-.inersialab-rtl .inersialab-form-control.select-field {
-    background-position: left 18px center !important;
-    padding-left: 48px !important;
-    padding-right: 18px !important;
-}
-
 /* Input Error Message Styling */
 .inersialab-error-msg {
     color: #ff4d4d !important;
@@ -304,12 +294,59 @@
 
 .inersialab-form-control.invalid-field {
     border-color: #ff4d4d !important;
-    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15) !important;
 }
 
 .inersialab-form-control.invalid-field:focus {
     border-color: #ff4d4d !important;
-    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15) !important;
+}
+
+/* Valid field green border feedback */
+.inersialab-form-control.valid-field {
+    border-color: #22c55e !important;
+}
+
+/* Contact page layout: info + map top row, form full width below */
+.inersialab-contact-container.inersialab-has-map {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 40px !important;
+}
+
+.inersialab-top-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 40px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+}
+
+.inersialab-top-row .inersialab-contact-left {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.inersialab-map-wrapper {
+    flex: 1 !important;
+    min-width: 0 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    min-height: 350px !important;
+}
+
+.inersialab-map-wrapper iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: 0 !important;
+    display: block !important;
+}
+
+.inersialab-form-fullwidth {
+    width: 100% !important;
+    justify-content: center !important;
+}
+
+.inersialab-form-fullwidth .inersialab-contact-card {
+    max-width: 100% !important;
 }
 
 /* Submit Row Layout */
@@ -408,9 +445,13 @@
     .inersialab-form-submit-row {
         justify-content: center !important;
     }
-    /* Centering submit button for Arabic RTL on mobile */
-    .inersialab-contact-section.inersialab-rtl .inersialab-form-submit-row {
-        justify-content: center !important;
+    /* Stack info + map vertically on tablet */
+    .inersialab-top-row {
+        flex-direction: column !important;
+        gap: 24px !important;
+    }
+    .inersialab-map-wrapper {
+        min-height: 300px !important;
     }
 }
 
@@ -425,13 +466,13 @@
 
 @media (max-width: 560px) {
     .inersialab-contact-section {
-        padding: 48px 0 !important;
+        padding: 36px 0 !important;
     }
     .inersialab-contact-container {
         gap: 24px !important;
     }
     .inersialab-contact-card {
-        padding: 30px 20px !important;
+        padding: 24px 18px !important;
         border-radius: 16px !important;
     }
     .inersialab-form-row {
@@ -441,6 +482,10 @@
     .inersialab-info-value {
         font-size: 18px !important;
     }
+    .inersialab-map-wrapper {
+        min-height: 280px !important;
+        border-radius: 14px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -448,52 +493,4 @@
         font-size: 27px !important;
         letter-spacing: -0.5px !important;
     }
-}
-
-/* ==========================================
-   RTL (Arabic Layout overrides)
-   ========================================== */
-.inersialab-contact-section.inersialab-rtl {
-    direction: rtl !important;
-}
-
-.inersialab-contact-section.inersialab-rtl * {
-    text-align: right !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-contact-left {
-    align-items: flex-start !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-info-item {
-    align-items: flex-start !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-form-submit-row {
-    justify-content: flex-end !important;
-}
-
-/* RTL override for animated buttons sliding left instead of right */
-.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit::before {
-    left: auto !important;
-    right: 4px !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit::after {
-    left: auto !important;
-    right: 16px !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M800 480H160a32 32 0 1 0 0 64h640a32 32 0 0 0 0-64z' fill='%23ffffff'/%3E%3Cpath d='m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit:hover::after {
-    right: 50% !important;
-    transform: translate(50%, -50%) !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-btn-text {
-    transform: translateX(-24px) !important;
-}
-
-.inersialab-contact-section.inersialab-rtl .inersialab-btn-submit:hover .inersialab-btn-text {
-    transform: translateX(-50px) !important;
 }

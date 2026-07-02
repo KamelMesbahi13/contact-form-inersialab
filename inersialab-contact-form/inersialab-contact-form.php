@@ -2,7 +2,7 @@
 /**
  * Plugin Name: InersiaLab Contact Form
  * Description: Premium two-column contact form shortcode [inersialab_contact] with AJAX email submission.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: InersiaLab
  * Author URI: https://inersialab.com
  * License: GPL2
@@ -19,20 +19,27 @@ function inersialab_contact_enqueue_assets() {
         'inersialab-contact-style', 
         plugins_url( 'css/style.css', __FILE__ ), 
         array(), 
-        '1.0.0' 
+        '1.1.0' 
     );
     wp_register_script( 
         'inersialab-contact-script', 
         plugins_url( 'js/script.js', __FILE__ ), 
         array(), 
-        '1.0.0', 
+        '1.1.0', 
         true 
     );
 }
 
 // Shortcode implementation
 add_shortcode( 'inersialab_contact', 'inersialab_contact_shortcode_handler' );
-function inersialab_contact_shortcode_handler() {
+function inersialab_contact_shortcode_handler( $atts ) {
+    // Parse shortcode attributes
+    $atts = shortcode_atts( array(
+        'show_map' => 'no',
+    ), $atts, 'inersialab_contact' );
+
+    $show_map = ( strtolower( $atts['show_map'] ) === 'yes' );
+
     // Enqueue registered styles and scripts
     wp_enqueue_style( 'inersialab-contact-style' );
     wp_enqueue_script( 'inersialab-contact-script' );
@@ -42,46 +49,44 @@ function inersialab_contact_shortcode_handler() {
         wp_enqueue_style( 'google-font-montserrat', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap', array(), null );
     }
 
-    // Detect if current page context is Arabic based on url containing '/ar'
+    // Detect if current page context is English based on url containing '/en'
     $uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
-    $is_arabic = preg_match( '#(/ar/|/ar$|/ar\?)#', $uri );
+    $is_english = preg_match( '#(/en/|/en$|/en\?)#', $uri );
 
-    // Translation Dictionary
+    // Translation Dictionary — French (default) / English (/en)
     $lang = array(
-        'direction'   => $is_arabic ? 'rtl' : 'ltr',
-        'rtl_class'   => $is_arabic ? 'inersialab-rtl' : '',
-        'heading'     => $is_arabic ? 'تواصل —<br>معنا' : 'Prenez —<br>contact avec nous',
-        'desc'        => $is_arabic ? 'نحن هنا لمساعدتك! سواء كان لديك سؤال حول خدماتنا، أو تحتاج إلى مساعدة في حسابك، أو تريد تقديم ملاحظاتك، فإن فريقنا مستعد لمساعدتك.' : "Nous sommes là pour vous aider ! Que vous ayez une question sur nos services, besoin d'aide avec votre compte ou que vous souhaitiez nous faire part de vos commentaires, notre équipe est prête à vous aider.",
-        'email_lbl'   => $is_arabic ? 'البريد الإلكتروني:' : 'Email :',
-        'phone_lbl'   => $is_arabic ? 'الهاتف:' : 'Téléphone :',
+        'heading'     => $is_english ? 'Get in —<br>touch with us' : 'Prenez —<br>contact avec nous',
+        'desc'        => $is_english ? 'We are here to help! Whether you have a question about our services, need help with your account, or want to share your feedback, our team is ready to assist you.' : "Nous sommes là pour vous aider ! Que vous ayez une question sur nos services, besoin d'aide avec votre compte ou que vous souhaitiez nous faire part de vos commentaires, notre équipe est prête à vous aider.",
+        'email_lbl'   => $is_english ? 'Email:' : 'Email :',
+        'phone_lbl'   => $is_english ? 'Phone:' : 'Téléphone :',
         'email_val'   => 'info@inersialab.com',
         'phone_val'   => '+1 234 567 78',
-        'note'        => $is_arabic ? 'متاح من الاثنين إلى الجمعة، من 9 صباحًا حتى 6 مساءً بتوقيت غرينتش' : 'Disponible du lundi au vendredi, de 9 AM - 6 PM GMT',
-        'first_name'  => $is_arabic ? 'الاسم الأول' : 'Prénom',
-        'first_placeholder' => $is_arabic ? 'أدخل اسمك الأول...' : 'Entrez votre prénom...',
-        'last_name'   => $is_arabic ? 'اسم العائلة' : 'Nom',
-        'last_placeholder'  => $is_arabic ? 'أدخل اسم العائلة...' : 'Entrez votre nom...',
-        'email'       => $is_arabic ? 'البريد الإلكتروني' : 'Email',
-        'email_placeholder' => $is_arabic ? 'أدخل عنوان بريدك الإلكتروني...' : 'Entrez votre adresse email...',
-        'phone'       => $is_arabic ? 'رقم الهاتف' : 'Téléphone',
-        'phone_placeholder' => $is_arabic ? 'أدخل رقم هاتفك...' : 'Entrez votre numéro de téléphone...',
-        'service'     => $is_arabic ? 'الخدمة المطلوبة' : 'Service requis',
-        'service_placeholder' => $is_arabic ? '-- اختر خدمة --' : '-- Choisissez un service --',
-        'message'     => $is_arabic ? 'كيف يمكننا مساعدتك؟' : 'Comment pouvons-nous vous aider ?',
-        'msg_placeholder'   => $is_arabic ? 'أدخل رسالتك...' : 'Entrez votre message...',
-        'send_msg'    => $is_arabic ? 'إرسال الرسالة' : 'Envoyer',
+        'note'        => $is_english ? 'Available Monday to Friday, 9 AM - 6 PM GMT' : 'Disponible du lundi au vendredi, de 9 AM - 6 PM GMT',
+        'first_name'  => $is_english ? 'First Name' : 'Prénom',
+        'first_placeholder' => $is_english ? 'Enter your first name...' : 'Entrez votre prénom...',
+        'last_name'   => $is_english ? 'Last Name' : 'Nom',
+        'last_placeholder'  => $is_english ? 'Enter your last name...' : 'Entrez votre nom...',
+        'email'       => $is_english ? 'Email' : 'Email',
+        'email_placeholder' => $is_english ? 'Enter your email address...' : 'Entrez votre adresse email...',
+        'phone'       => $is_english ? 'Phone' : 'Téléphone',
+        'phone_placeholder' => $is_english ? 'Enter your phone number...' : 'Entrez votre numéro de téléphone...',
+        'service'     => $is_english ? 'Required Service' : 'Service requis',
+        'service_placeholder' => $is_english ? '-- Choose a service --' : '-- Choisissez un service --',
+        'message'     => $is_english ? 'How can we help you?' : 'Comment pouvons-nous vous aider ?',
+        'msg_placeholder'   => $is_english ? 'Enter your message...' : 'Entrez votre message...',
+        'send_msg'    => $is_english ? 'Send Message' : 'Envoyer',
     );
 
     // List of offered services
-    $services_options = $is_arabic ? array(
-        'app_dev'          => 'تطوير التطبيقات',
-        'web_dev'          => 'تطوير المواقع',
-        'marketing_dig'    => 'التسويق الرقمي',
-        'branding_id'      => 'الهوية البصرية والعلامة التجارية',
-        'seo'              => 'تحسين محركات البحث (SEO)',
-        'social_media'     => 'إدارة مواقع التواصل الاجتماعي',
-        'content_creation' => 'صناعة المحتوى',
-        'consulting'       => 'استشارات الاستراتيجية الرقمية',
+    $services_options = $is_english ? array(
+        'app_dev'          => 'App Development',
+        'web_dev'          => 'Web Development',
+        'marketing_dig'    => 'Digital Marketing',
+        'branding_id'      => 'Branding & Visual Identity',
+        'seo'              => 'SEO Optimization',
+        'social_media'     => 'Social Media Management',
+        'content_creation' => 'Content Creation',
+        'consulting'       => 'Digital Strategy Consulting',
     ) : array(
         'app_dev'          => 'Développement d\'application',
         'web_dev'          => 'Développement web',
@@ -97,30 +102,69 @@ function inersialab_contact_shortcode_handler() {
     wp_localize_script( 'inersialab-contact-script', 'inersialabContactData', array(
         'ajax_url' => admin_url( 'admin-ajax.php' ),
         'nonce'    => wp_create_nonce( 'inersialab_contact_nonce' ),
-        'lang_code' => $is_arabic ? 'ar' : 'fr',
+        'lang_code' => $is_english ? 'en' : 'fr',
         'messages' => array(
-            'first_name_required' => $is_arabic ? 'الاسم الأول مطلوب.' : 'Le prénom est requis.',
-            'first_name_invalid'  => $is_arabic ? 'يرجى إدخال اسم أول صالح (حرفين على الأقل).' : 'Veuillez entrer un prénom valide (au moins 2 lettres).',
-            'last_name_required'  => $is_arabic ? 'اسم العائلة مطلوب.' : 'Le nom est requis.',
-            'last_name_invalid'   => $is_arabic ? 'يرجى إدخال اسم عائلة صالح (حرفين على الأقل).' : 'Veuillez entrer un nom valide (au moins 2 lettres).',
-            'email_required'      => $is_arabic ? 'البريد الإلكتروني مطلوب.' : "L'adresse email est requise.",
-            'email_invalid'       => $is_arabic ? 'يرجى إدخال بريد إلكتروني صالح.' : 'Veuillez entrer une adresse email valide.',
-            'phone_required'      => $is_arabic ? 'رقم الهاتف مطلوب.' : 'Le numéro de téléphone est requis.',
-            'phone_invalid'       => $is_arabic ? 'يرجى إدخال رقم هاتف صالح.' : 'Veuillez entrer un numéro de téléphone valide.',
-            'service_required'    => $is_arabic ? 'يرجى اختيار خدمة.' : 'Veuillez sélectionner un service.',
-            'message_required'    => $is_arabic ? 'الرسالة مطلوبة.' : 'Le message est requis.',
-            'sending'             => $is_arabic ? 'جاري الإرسال...' : 'Envoi...',
-            'error_general'       => $is_arabic ? 'حدث خطأ. يرجى المحاولة مرة أخرى.' : 'Une erreur est survenue. Veuillez réessayer.',
-            'error_conn'          => $is_arabic ? 'تعذر إرسال الرسالة بسبب خطأ في الاتصال. يرجى المحاولة لاحقًا.' : "Impossible d'envoyer le message en raison d'une erreur de connexion. Veuillez réessayer plus tard."
+            'first_name_required' => $is_english ? 'First name is required.' : 'Le prénom est requis.',
+            'first_name_invalid'  => $is_english ? 'Please enter a valid first name (at least 2 letters).' : 'Veuillez entrer un prénom valide (au moins 2 lettres).',
+            'last_name_required'  => $is_english ? 'Last name is required.' : 'Le nom est requis.',
+            'last_name_invalid'   => $is_english ? 'Please enter a valid last name (at least 2 letters).' : 'Veuillez entrer un nom valide (au moins 2 lettres).',
+            'email_required'      => $is_english ? 'Email address is required.' : "L'adresse email est requise.",
+            'email_invalid'       => $is_english ? 'Please enter a valid email address.' : 'Veuillez entrer une adresse email valide.',
+            'phone_required'      => $is_english ? 'Phone number is required.' : 'Le numéro de téléphone est requis.',
+            'phone_invalid'       => $is_english ? 'Please enter a valid phone number.' : 'Veuillez entrer un numéro de téléphone valide.',
+            'service_required'    => $is_english ? 'Please select a service.' : 'Veuillez sélectionner un service.',
+            'message_required'    => $is_english ? 'Message is required.' : 'Le message est requis.',
+            'sending'             => $is_english ? 'Sending...' : 'Envoi...',
+            'error_general'       => $is_english ? 'An error occurred. Please try again.' : 'Une erreur est survenue. Veuillez réessayer.',
+            'error_conn'          => $is_english ? 'Unable to send the message due to a connection error. Please try again later.' : "Impossible d'envoyer le message en raison d'une erreur de connexion. Veuillez réessayer plus tard."
         )
     ) );
 
     ob_start();
     ?>
-    <section class="inersialab-contact-section <?php echo esc_attr( $lang['rtl_class'] ); ?>">
-        <div class="inersialab-contact-container">
+    <section class="inersialab-contact-section">
+        <div class="inersialab-contact-container <?php echo $show_map ? 'inersialab-has-map' : ''; ?>">
             
-            <!-- Left Side Column: Info and Heading -->
+            <?php if ( $show_map ) : ?>
+            <!-- Top Row: Info + Map side by side -->
+            <div class="inersialab-top-row">
+                <div class="inersialab-contact-left">
+                    <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
+                    <p class="inersialab-contact-desc">
+                        <?php echo esc_html( $lang['desc'] ); ?>
+                    </p>
+                    
+                    <div class="inersialab-contact-info-list">
+                        <div class="inersialab-info-item">
+                            <span class="inersialab-info-label"><?php echo esc_html( $lang['email_lbl'] ); ?></span>
+                            <a href="mailto:<?php echo esc_attr( $lang['email_val'] ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['email_val'] ); ?></a>
+                        </div>
+                        <div class="inersialab-info-item">
+                            <span class="inersialab-info-label"><?php echo esc_html( $lang['phone_lbl'] ); ?></span>
+                            <a href="tel:<?php echo esc_attr( str_replace( ' ', '', $lang['phone_val'] ) ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['phone_val'] ); ?></a>
+                        </div>
+                    </div>
+                    
+                    <div class="inersialab-contact-note">
+                        <?php echo esc_html( $lang['note'] ); ?>
+                    </div>
+                </div>
+
+                <!-- Google Maps Embed -->
+                <div class="inersialab-map-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.837958628775!2d3.4590444999999996!3d36.75046040000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e699a0a00b593%3A0xeb19e4961ee53cbe!2sUPS%20STORE%20BOUMERDES!5e0!3m2!1sen!2sdz!4v1782986721045!5m2!1sen!2sdz" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="strict-origin-when-cross-origin">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Full-width Form below -->
+            <div class="inersialab-contact-right inersialab-form-fullwidth">
+            <?php else : ?>
+            <!-- Standard layout: Info left, Form right -->
             <div class="inersialab-contact-left">
                 <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
                 <p class="inersialab-contact-desc">
@@ -143,8 +187,8 @@ function inersialab_contact_shortcode_handler() {
                 </div>
             </div>
 
-            <!-- Right Side Column: Form Card -->
             <div class="inersialab-contact-right">
+            <?php endif; ?>
                 <div class="inersialab-contact-card">
                     <form id="inersialab-contact-form" novalidate>
                         <!-- Nonce & Honeypot Fields -->
@@ -248,11 +292,11 @@ function inersialab_send_contact_ajax_handler() {
 
     // Fetch language code to dynamically translate responses
     $lang_code = isset( $_POST['lang'] ) ? sanitize_text_field( wp_unslash( $_POST['lang'] ) ) : 'fr';
-    $is_arabic = ( $lang_code === 'ar' );
+    $is_english = ( $lang_code === 'en' );
 
     // 4. Honeypot Check (Silently reject by pretending it was successful)
     if ( ! empty( $_POST['website'] ) ) {
-        $msg = $is_arabic ? 'تم إرسال رسالتك! سنقوم بالرد عليك قريبًا.' : 'Votre message a été envoyé ! Nous vous répondrons bientôt.';
+        $msg = $is_english ? 'Your message has been sent! We will get back to you soon.' : 'Votre message a été envoyé ! Nous vous répondrons bientôt.';
         wp_send_json_success( array( 'message' => $msg ) );
     }
 
@@ -275,7 +319,7 @@ function inersialab_send_contact_ajax_handler() {
         $submit_count = 0;
     }
     if ( $submit_count >= 10 ) {
-        $limit_msg = $is_arabic ? 'محاولات كثيرة جداً. يرجى المحاولة مرة أخرى بعد ساعة.' : 'Trop de tentatives. Veuillez réessayer dans une heure.';
+        $limit_msg = $is_english ? 'Too many attempts. Please try again in an hour.' : 'Trop de tentatives. Veuillez réessayer dans une heure.';
         wp_send_json_error( array( 'message' => $limit_msg ) );
     }
 
@@ -292,40 +336,40 @@ function inersialab_send_contact_ajax_handler() {
 
     // 7. Required Fields Enforcement
     if ( empty( $first_name ) || empty( $last_name ) || empty( $email ) || empty( $phone ) || empty( $service ) || empty( $message ) ) {
-        $msg = $is_arabic ? 'جميع الحقول مطلوبة.' : 'Tous les champs sont requis.';
+        $msg = $is_english ? 'All fields are required.' : 'Tous les champs sont requis.';
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
     // Name validation (minimum 2 letters/accents/spaces/hyphens/apostrophes)
     if ( ! preg_match( '/^[\p{L}\s\-\']{2,}$/u', $first_name ) ) {
-        $msg = $is_arabic ? 'الاسم الأول غير صالح (يجب أن يكون حرفين على الأقل ويحتوي على حروف فقط).' : 'Le prénom est invalide (doit contenir au moins 2 lettres).';
+        $msg = $is_english ? 'Invalid first name (must contain at least 2 letters).' : 'Le prénom est invalide (doit contenir au moins 2 lettres).';
         wp_send_json_error( array( 'message' => $msg ) );
     }
     if ( ! preg_match( '/^[\p{L}\s\-\']{2,}$/u', $last_name ) ) {
-        $msg = $is_arabic ? 'اسم العائلة غير صالح (يجب أن يكون حرفين على الأقل ويحتوي على حروف فقط).' : 'Le nom est invalide (doit contenir au moins 2 lettres).';
+        $msg = $is_english ? 'Invalid last name (must contain at least 2 letters).' : 'Le nom est invalide (doit contenir au moins 2 lettres).';
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
     // Email check
     if ( ! is_email( $email ) ) {
-        $msg = $is_arabic ? 'يرجى إدخال بريد إلكتروني صالح.' : "L'adresse email n'est pas valide.";
+        $msg = $is_english ? 'Please enter a valid email address.' : "L'adresse email n'est pas valide.";
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
     // 8. Service Whitelist Validation
     $services_whitelist = array(
-        'app_dev'          => 'Développement d\'application',
-        'web_dev'          => 'Développement web',
-        'marketing_dig'    => 'Marketing digital',
-        'branding_id'      => 'Branding & identité visuelle',
-        'seo'              => 'Référencement SEO',
-        'social_media'     => 'Gestion des réseaux sociaux',
-        'content_creation' => 'Création de contenu',
-        'consulting'       => 'Conseil en stratégie digitale',
+        'app_dev'          => 'App Development',
+        'web_dev'          => 'Web Development',
+        'marketing_dig'    => 'Digital Marketing',
+        'branding_id'      => 'Branding & Visual Identity',
+        'seo'              => 'SEO Optimization',
+        'social_media'     => 'Social Media Management',
+        'content_creation' => 'Content Creation',
+        'consulting'       => 'Digital Strategy Consulting',
     );
 
     if ( ! array_key_exists( $service, $services_whitelist ) ) {
-        $msg = $is_arabic ? 'الخدمة المحددة غير صالحة.' : 'Le service sélectionné est invalide.';
+        $msg = $is_english ? 'The selected service is invalid.' : 'Le service sélectionné est invalide.';
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
@@ -357,10 +401,10 @@ function inersialab_send_contact_ajax_handler() {
         $submit_count++;
         set_transient( $transient_key, $submit_count, HOUR_IN_SECONDS );
 
-        $msg = $is_arabic ? 'تم إرسال رسالتك! سنقوم بالرد عليك قريبًا.' : "Votre message a été envoyé ! Nous vous répondrons bientôt.";
+        $msg = $is_english ? 'Your message has been sent! We will get back to you soon.' : "Votre message a été envoyé ! Nous vous répondrons bientôt.";
         wp_send_json_success( array( 'message' => $msg ) );
     } else {
-        $msg = $is_arabic ? 'حدث خطأ أثناء إرسال البريد الإلكتروني. يرجى المحاولة لاحقًا.' : "Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer plus tard.";
+        $msg = $is_english ? 'An error occurred while sending the email. Please try again later.' : "Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer plus tard.";
         wp_send_json_error( array( 'message' => $msg ) );
     }
 }

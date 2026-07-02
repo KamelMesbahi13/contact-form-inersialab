@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('inersialab-submit-btn');
     const responseBox = document.getElementById('inersialab-form-response')
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const nameRegex = /^[\p{L}\s\-']{2,}$/u;
+
     // Quick mapping helper for inputs and error containers
     const fields = [
         { input: firstNameInput, errId: 'err-first-name', name: 'First name' },
@@ -23,28 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
         { input: messageInput, errId: 'err-message', name: 'Message' }
     ];
 
-    // Clear error style and text when field is focused/edited
-    fields.forEach(field => {
-        if (!field.input) return;
-        const errContainer = document.getElementById(field.errId);
-
-        const clearError = () => {
-            field.input.classList.remove('invalid-field');
-            if (errContainer) {
-                errContainer.style.opacity = '0';
-                setTimeout(() => {
-                    if (field.input.classList.contains('invalid-field')) return;
-                    errContainer.textContent = '';
-                }, 200);
-            }
-        };
-
-        field.input.addEventListener('input', clearError);
-        field.input.addEventListener('focus', clearError);
-    });
+    // Track whether a field has been interacted with (touched)
+    const touchedFields = new Set();
 
     // Helper to display errors under specific input fields
     const showFieldError = (input, errId, msg) => {
+        input.classList.remove('valid-field');
         input.classList.add('invalid-field');
         const errContainer = document.getElementById(errId);
         if (errContainer) {
@@ -53,45 +40,144 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Client-side validator
-    const validateForm = () => {
-        let isValid = true;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const nameRegex = /^[\p{L}\s\-']{2,}$/u;
-
-        fields.forEach(field => {
-            if (!field.input) return;
-            const val = field.input.value.trim();
-
-            if (val === '') {
-                let msg = '';
-                if (field.input === firstNameInput) msg = inersialabContactData.messages.first_name_required;
-                else if (field.input === lastNameInput) msg = inersialabContactData.messages.last_name_required;
-                else if (field.input === emailInput) msg = inersialabContactData.messages.email_required;
-                else if (field.input === phoneInput) msg = inersialabContactData.messages.phone_required;
-                else if (field.input === serviceInput) msg = inersialabContactData.messages.service_required;
-                else if (field.input === messageInput) msg = inersialabContactData.messages.message_required;
-
-                showFieldError(field.input, field.errId, msg);
-                isValid = false;
-            } else if (field.input === firstNameInput && !nameRegex.test(val)) {
-                showFieldError(field.input, field.errId, inersialabContactData.messages.first_name_invalid);
-                isValid = false;
-            } else if (field.input === lastNameInput && !nameRegex.test(val)) {
-                showFieldError(field.input, field.errId, inersialabContactData.messages.last_name_invalid);
-                isValid = false;
-            } else if (field.input === emailInput && !emailRegex.test(val)) {
-                showFieldError(field.input, field.errId, inersialabContactData.messages.email_invalid);
-                isValid = false;
-            } else if (field.input === phoneInput) {
-                const cleanVal = val.replace(/[0-9+\s\-()]/g, '');
-                if (cleanVal !== '' || val.replace(/[^0-9]/g, '').length < 6) {
-                    showFieldError(field.input, field.errId, inersialabContactData.messages.phone_invalid);
-                    isValid = false;
+    // Helper to clear errors and optionally mark as valid
+    const clearFieldError = (input, errId, markValid) => {
+        input.classList.remove('invalid-field');
+        const errContainer = document.getElementById(errId);
+        if (errContainer) {
+            errContainer.style.opacity = '0';
+            setTimeout(() => {
+                if (!input.classList.contains('invalid-field')) {
+                    errContainer.textContent = '';
                 }
+            }, 200);
+        }
+        if (markValid) {
+            input.classList.add('valid-field');
+        } else {
+            input.classList.remove('valid-field');
+        }
+    };
+
+    // Validate a single field — returns true if valid
+    const validateField = (field) => {
+        if (!field.input) return true;
+        const val = field.input.value.trim();
+
+        // Empty check
+        if (val === '') {
+            let msg = '';
+            if (field.input === firstNameInput) msg = inersialabContactData.messages.first_name_required;
+            else if (field.input === lastNameInput) msg = inersialabContactData.messages.last_name_required;
+            else if (field.input === emailInput) msg = inersialabContactData.messages.email_required;
+            else if (field.input === phoneInput) msg = inersialabContactData.messages.phone_required;
+            else if (field.input === serviceInput) msg = inersialabContactData.messages.service_required;
+            else if (field.input === messageInput) msg = inersialabContactData.messages.message_required;
+            showFieldError(field.input, field.errId, msg);
+            return false;
+        }
+
+        // Format-specific checks
+        if (field.input === firstNameInput && !nameRegex.test(val)) {
+            showFieldError(field.input, field.errId, inersialabContactData.messages.first_name_invalid);
+            return false;
+        }
+        if (field.input === lastNameInput && !nameRegex.test(val)) {
+            showFieldError(field.input, field.errId, inersialabContactData.messages.last_name_invalid);
+            return false;
+        }
+        if (field.input === emailInput && !emailRegex.test(val)) {
+            showFieldError(field.input, field.errId, inersialabContactData.messages.email_invalid);
+            return false;
+        }
+        if (field.input === phoneInput) {
+            const cleanVal = val.replace(/[0-9+\s\-()]/g, '');
+            if (cleanVal !== '' || val.replace(/[^0-9]/g, '').length < 6) {
+                showFieldError(field.input, field.errId, inersialabContactData.messages.phone_invalid);
+                return false;
+            }
+        }
+
+        // All checks passed — mark valid
+        clearFieldError(field.input, field.errId, true);
+        return true;
+    };
+
+    // Debounce utility
+    const debounceTimers = new Map();
+    const debouncedValidate = (field, delay = 300) => {
+        const key = field.errId;
+        if (debounceTimers.has(key)) {
+            clearTimeout(debounceTimers.get(key));
+        }
+        debounceTimers.set(key, setTimeout(() => {
+            debounceTimers.delete(key);
+            validateField(field);
+        }, delay));
+    };
+
+    // Attach real-time validation listeners to each field
+    fields.forEach(field => {
+        if (!field.input) return;
+
+        // Mark field as touched on first interaction
+        const markTouched = () => {
+            touchedFields.add(field.errId);
+        };
+
+        if (field.input === serviceInput) {
+            // Select dropdown — validate immediately on change
+            field.input.addEventListener('change', () => {
+                markTouched();
+                validateField(field);
+            });
+        } else {
+            // Text/email/tel/textarea — debounced validation on input
+            field.input.addEventListener('input', () => {
+                markTouched();
+                const val = field.input.value.trim();
+
+                // If field was invalid and is now being corrected, validate with debounce
+                if (touchedFields.has(field.errId)) {
+                    // If field is empty after user cleared it, show error immediately
+                    if (val === '') {
+                        debouncedValidate(field, 500);
+                    } else {
+                        debouncedValidate(field, 300);
+                    }
+                }
+            });
+
+            // On blur, validate immediately if field was touched
+            field.input.addEventListener('blur', () => {
+                if (touchedFields.has(field.errId)) {
+                    // Cancel any pending debounce
+                    if (debounceTimers.has(field.errId)) {
+                        clearTimeout(debounceTimers.get(field.errId));
+                        debounceTimers.delete(field.errId);
+                    }
+                    validateField(field);
+                }
+            });
+        }
+
+        // On focus, if field has valid-field class, keep it; just clear invalid state temporarily
+        field.input.addEventListener('focus', () => {
+            if (field.input.classList.contains('invalid-field')) {
+                // Don't clear error on focus — let the user see it while typing
             }
         });
+    });
 
+    // Full form validation (used on submit as safety net)
+    const validateAllFields = () => {
+        let isValid = true;
+        fields.forEach(field => {
+            touchedFields.add(field.errId); // Mark all as touched on submit
+            if (!validateField(field)) {
+                isValid = false;
+            }
+        });
         return isValid;
     };
 
@@ -100,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         // 1. Validate Form client-side
-        if (!validateForm()) {
+        if (!validateAllFields()) {
             return;
         }
 
@@ -148,6 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     responseBox.classList.add('show-response', 'success');
                     responseBox.textContent = data.data.message;
                     form.reset();
+                    // Clear all validation states after successful submit
+                    fields.forEach(field => {
+                        if (field.input) {
+                            field.input.classList.remove('valid-field', 'invalid-field');
+                        }
+                    });
+                    touchedFields.clear();
                 } else {
                     // Server-side validation or email failure
                     responseBox.classList.add('show-response', 'error');
