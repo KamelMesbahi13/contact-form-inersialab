@@ -27,6 +27,9 @@
     font-family: var(--il-font-main) !important;
 }
 
+/* ==========================================
+   Container Grid Layout
+   ========================================== */
 .inersialab-contact-container {
     max-width: 1200px !important;
     margin: 0 auto !important;
@@ -37,7 +40,32 @@
     align-items: center !important;
 }
 
-/* Left Column Styling */
+/* When map is present: both columns stretch to match height */
+.inersialab-contact-container.inersialab-has-map {
+    align-items: stretch !important;
+    gap: 48px !important;
+}
+
+/* ==========================================
+   Contact Tag Badge
+   ========================================== */
+.inersialab-contact-tag {
+    display: inline-block !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    color: var(--il-accent-orange) !important;
+    background: rgba(255, 107, 53, 0.08) !important;
+    border: 1px solid rgba(255, 107, 53, 0.18) !important;
+    padding: 6px 16px !important;
+    border-radius: 100px !important;
+    margin-bottom: 20px !important;
+}
+
+/* ==========================================
+   Left Column Styling
+   ========================================== */
 .inersialab-contact-left {
     display: flex !important;
     flex-direction: column !important;
@@ -61,23 +89,32 @@
     font-weight: 400 !important;
     font-size: 14px !important;
     line-height: 1.65 !important;
-    color: #444444 !important;
-    margin: 0 0 40px 0 !important;
+    color: #5a6580 !important;
+    margin: 0 0 36px 0 !important;
     max-width: 460px !important;
 }
 
+/* ==========================================
+   Info Items with Icons
+   ========================================== */
 .inersialab-contact-info-list {
     display: flex !important;
     flex-direction: column !important;
-    gap: 28px !important;
-    margin-bottom: 32px !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
     width: 100% !important;
 }
 
 .inersialab-info-item {
     display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.inersialab-info-text {
+    display: flex !important;
     flex-direction: column !important;
-    gap: 6px !important;
+    gap: 2px !important;
 }
 
 .inersialab-info-label {
@@ -85,11 +122,11 @@
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 1.5px !important;
-    color: rgba(26, 37, 80, 0.6) !important;
+    color: rgba(26, 37, 80, 0.5) !important;
 }
 
 .inersialab-info-value {
-    font-size: 24px !important;
+    font-size: 17px !important;
     font-weight: 700 !important;
     color: var(--il-text-light) !important;
     text-decoration: none !important;
@@ -102,13 +139,52 @@
     color: var(--il-accent-orange) !important;
 }
 
+/* ==========================================
+   Availability Note
+   ========================================== */
 .inersialab-contact-note {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
     font-size: 12px !important;
     font-weight: 500 !important;
-    color: rgba(26, 37, 80, 0.6) !important;
+    color: rgba(26, 37, 80, 0.5) !important;
     margin-bottom: 0 !important;
+    padding: 10px 16px !important;
+    background: rgba(26, 37, 80, 0.03) !important;
+    border-radius: 10px !important;
 }
 
+.inersialab-contact-note svg {
+    min-width: 14px !important;
+    opacity: 0.6 !important;
+}
+
+/* ==========================================
+   Google Maps Embed (inside left column)
+   ========================================== */
+.inersialab-map-wrapper {
+    margin-top: 28px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    flex: 1 !important;
+    width: 100% !important;
+    min-height: 280px !important;
+    box-shadow: 0 8px 30px rgba(13, 27, 42, 0.08) !important;
+    border: 1px solid rgba(13, 27, 42, 0.06) !important;
+}
+
+.inersialab-map-wrapper iframe {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 280px !important;
+    border: 0 !important;
+    display: block !important;
+}
+
+/* ==========================================
+   Submit Button
+   ========================================== */
 .inersialab-btn-livechat,
 .inersialab-btn-submit {
     display: inline-flex !important;
@@ -198,7 +274,9 @@
     opacity: 0 !important;
 }
 
-/* Right Column Card Styling */
+/* ==========================================
+   Right Column Card Styling
+   ========================================== */
 .inersialab-contact-right {
     display: flex !important;
     justify-content: flex-end !important;
@@ -215,7 +293,14 @@
     border: 1px solid rgba(13, 27, 42, 0.06) !important;
 }
 
-/* Form Layout Components */
+/* When map is present, make card fill the full column */
+.inersialab-has-map .inersialab-contact-card {
+    max-width: 100% !important;
+}
+
+/* ==========================================
+   Form Layout Components
+   ========================================== */
 .inersialab-form-row {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -280,7 +365,9 @@
     cursor: pointer !important;
 }
 
-/* Input Error Message Styling */
+/* ==========================================
+   Input Error & Valid States
+   ========================================== */
 .inersialab-error-msg {
     color: #ff4d4d !important;
     font-size: 11px !important;
@@ -300,56 +387,13 @@
     border-color: #ff4d4d !important;
 }
 
-/* Valid field green border feedback */
 .inersialab-form-control.valid-field {
     border-color: #22c55e !important;
 }
 
-/* Contact page layout: info + map top row, form full width below */
-.inersialab-contact-container.inersialab-has-map {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 40px !important;
-}
-
-.inersialab-top-row {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 40px !important;
-    align-items: stretch !important;
-    width: 100% !important;
-}
-
-.inersialab-top-row .inersialab-contact-left {
-    flex: 1 !important;
-    min-width: 0 !important;
-}
-
-.inersialab-map-wrapper {
-    flex: 1 !important;
-    min-width: 0 !important;
-    border-radius: 20px !important;
-    overflow: hidden !important;
-    min-height: 350px !important;
-}
-
-.inersialab-map-wrapper iframe {
-    width: 100% !important;
-    height: 100% !important;
-    border: 0 !important;
-    display: block !important;
-}
-
-.inersialab-form-fullwidth {
-    width: 100% !important;
-    justify-content: center !important;
-}
-
-.inersialab-form-fullwidth .inersialab-contact-card {
-    max-width: 100% !important;
-}
-
-/* Submit Row Layout */
+/* ==========================================
+   Submit Row Layout
+   ========================================== */
 .inersialab-form-submit-row {
     display: flex !important;
     justify-content: flex-end !important;
@@ -368,7 +412,9 @@
     background-color: var(--il-text-muted) !important;
 }
 
-/* Form Ajax Response Styling */
+/* ==========================================
+   Form Ajax Response Styling
+   ========================================== */
 .inersialab-form-response {
     margin-top: 20px !important;
     font-size: 13px !important;
@@ -400,7 +446,9 @@
     border: 1px solid rgba(239, 68, 68, 0.25) !important;
 }
 
-/* Responsive Rules */
+/* ==========================================
+   Responsive Rules
+   ========================================== */
 @media (max-width: 1024px) {
     .inersialab-contact-container {
         gap: 40px !important;
@@ -413,6 +461,9 @@
 @media (max-width: 991px) {
     .inersialab-contact-container {
         grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+    .inersialab-contact-container.inersialab-has-map {
         gap: 32px !important;
     }
     .inersialab-contact-left {
@@ -431,9 +482,10 @@
         margin-bottom: 20px !important;
     }
     .inersialab-info-item {
-        align-items: center !important;
+        justify-content: center !important;
     }
     .inersialab-contact-note {
+        justify-content: center !important;
         margin-bottom: 0 !important;
     }
     .inersialab-contact-right {
@@ -445,12 +497,10 @@
     .inersialab-form-submit-row {
         justify-content: center !important;
     }
-    /* Stack info + map vertically on tablet */
-    .inersialab-top-row {
-        flex-direction: column !important;
-        gap: 24px !important;
-    }
     .inersialab-map-wrapper {
+        min-height: 300px !important;
+    }
+    .inersialab-map-wrapper iframe {
         min-height: 300px !important;
     }
 }
@@ -461,6 +511,9 @@
     }
     .inersialab-contact-container {
         gap: 28px !important;
+    }
+    .inersialab-info-value {
+        font-size: 15px !important;
     }
 }
 
@@ -480,11 +533,14 @@
         gap: 0 !important;
     }
     .inersialab-info-value {
-        font-size: 18px !important;
+        font-size: 14px !important;
     }
     .inersialab-map-wrapper {
-        min-height: 280px !important;
+        min-height: 240px !important;
         border-radius: 14px !important;
+    }
+    .inersialab-map-wrapper iframe {
+        min-height: 240px !important;
     }
 }
 

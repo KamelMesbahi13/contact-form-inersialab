@@ -49,11 +49,11 @@ function inersialab_contact_shortcode_handler( $atts ) {
         wp_enqueue_style( 'google-font-montserrat', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap', array(), null );
     }
 
-    // Detect if current page context is English based on url containing '/en'
+    // Detect if current page context is French based on url containing '/fr' (otherwise default to English)
     $uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
-    $is_english = preg_match( '#(/en/|/en$|/en\?)#', $uri );
+    $is_english = ! preg_match( '#(/fr/|/fr$|/fr\?)#', $uri );
 
-    // Translation Dictionary — French (default) / English (/en)
+    // Translation Dictionary — English (default) / French (/fr)
     $lang = array(
         'heading'     => $is_english ? 'Get in —<br>touch with us' : 'Prenez —<br>contact avec nous',
         'desc'        => $is_english ? 'We are here to help! Whether you have a question about our services, need help with your account, or want to share your feedback, our team is ready to assist you.' : "Nous sommes là pour vous aider ! Que vous ayez une question sur nos services, besoin d'aide avec votre compte ou que vous souhaitiez nous faire part de vos commentaires, notre équipe est prête à vous aider.",
@@ -125,32 +125,38 @@ function inersialab_contact_shortcode_handler( $atts ) {
     <section class="inersialab-contact-section">
         <div class="inersialab-contact-container <?php echo $show_map ? 'inersialab-has-map' : ''; ?>">
             
-            <?php if ( $show_map ) : ?>
-            <!-- Top Row: Info + Map side by side -->
-            <div class="inersialab-top-row">
-                <div class="inersialab-contact-left">
-                    <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
-                    <p class="inersialab-contact-desc">
-                        <?php echo esc_html( $lang['desc'] ); ?>
-                    </p>
-                    
-                    <div class="inersialab-contact-info-list">
-                        <div class="inersialab-info-item">
+            <!-- Left Side Column: Info and Heading -->
+            <div class="inersialab-contact-left">
+                <!-- Contact tag badge -->
+                <span class="inersialab-contact-tag"><?php echo $is_english ? 'Contact' : 'Contact'; ?></span>
+
+                <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
+                <p class="inersialab-contact-desc">
+                    <?php echo esc_html( $lang['desc'] ); ?>
+                </p>
+                
+                <div class="inersialab-contact-info-list">
+                    <div class="inersialab-info-item">
+                        <div class="inersialab-info-text">
                             <span class="inersialab-info-label"><?php echo esc_html( $lang['email_lbl'] ); ?></span>
                             <a href="mailto:<?php echo esc_attr( $lang['email_val'] ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['email_val'] ); ?></a>
                         </div>
-                        <div class="inersialab-info-item">
+                    </div>
+                    <div class="inersialab-info-item">
+                        <div class="inersialab-info-text">
                             <span class="inersialab-info-label"><?php echo esc_html( $lang['phone_lbl'] ); ?></span>
                             <a href="tel:<?php echo esc_attr( str_replace( ' ', '', $lang['phone_val'] ) ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['phone_val'] ); ?></a>
                         </div>
                     </div>
-                    
-                    <div class="inersialab-contact-note">
-                        <?php echo esc_html( $lang['note'] ); ?>
-                    </div>
+                </div>
+                
+                <div class="inersialab-contact-note">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <?php echo esc_html( $lang['note'] ); ?>
                 </div>
 
-                <!-- Google Maps Embed -->
+                <?php if ( $show_map ) : ?>
+                <!-- Google Maps Embed inside left column -->
                 <div class="inersialab-map-wrapper">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.837958628775!2d3.4590444999999996!3d36.75046040000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e699a0a00b593%3A0xeb19e4961ee53cbe!2sUPS%20STORE%20BOUMERDES!5e0!3m2!1sen!2sdz!4v1782986721045!5m2!1sen!2sdz" 
@@ -159,36 +165,11 @@ function inersialab_contact_shortcode_handler( $atts ) {
                         referrerpolicy="strict-origin-when-cross-origin">
                     </iframe>
                 </div>
+                <?php endif; ?>
             </div>
 
-            <!-- Full-width Form below -->
-            <div class="inersialab-contact-right inersialab-form-fullwidth">
-            <?php else : ?>
-            <!-- Standard layout: Info left, Form right -->
-            <div class="inersialab-contact-left">
-                <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
-                <p class="inersialab-contact-desc">
-                    <?php echo esc_html( $lang['desc'] ); ?>
-                </p>
-                
-                <div class="inersialab-contact-info-list">
-                    <div class="inersialab-info-item">
-                        <span class="inersialab-info-label"><?php echo esc_html( $lang['email_lbl'] ); ?></span>
-                        <a href="mailto:<?php echo esc_attr( $lang['email_val'] ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['email_val'] ); ?></a>
-                    </div>
-                    <div class="inersialab-info-item">
-                        <span class="inersialab-info-label"><?php echo esc_html( $lang['phone_lbl'] ); ?></span>
-                        <a href="tel:<?php echo esc_attr( str_replace( ' ', '', $lang['phone_val'] ) ); ?>" class="inersialab-info-value"><?php echo esc_html( $lang['phone_val'] ); ?></a>
-                    </div>
-                </div>
-                
-                <div class="inersialab-contact-note">
-                    <?php echo esc_html( $lang['note'] ); ?>
-                </div>
-            </div>
-
+            <!-- Right Side Column: Form Card -->
             <div class="inersialab-contact-right">
-            <?php endif; ?>
                 <div class="inersialab-contact-card">
                     <form id="inersialab-contact-form" novalidate>
                         <!-- Nonce & Honeypot Fields -->
@@ -291,7 +272,7 @@ function inersialab_send_contact_ajax_handler() {
     }
 
     // Fetch language code to dynamically translate responses
-    $lang_code = isset( $_POST['lang'] ) ? sanitize_text_field( wp_unslash( $_POST['lang'] ) ) : 'fr';
+    $lang_code = isset( $_POST['lang'] ) ? sanitize_text_field( wp_unslash( $_POST['lang'] ) ) : 'en';
     $is_english = ( $lang_code === 'en' );
 
     // 4. Honeypot Check (Silently reject by pretending it was successful)
