@@ -159,7 +159,7 @@ function inersialab_contact_shortcode_handler( $atts ) {
                 <!-- Google Maps Embed inside left column -->
                 <div class="inersialab-map-wrapper">
                     <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.837958628775!2d3.4590444999999996!3d36.75046040000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e699a0a00b593%3A0xeb19e4961ee53cbe!2sUPS%20STORE%20BOUMERDES!5e0!3m2!1sen!2sdz!4v1782986721045!5m2!1sen!2sdz" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.8388169288223!2d3.4590144!3d36.7504398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8473d4b5a5dc07ff%3A0xd608fa6d0553a078!2sInersiaLab!5e0!3m2!1sfr!2sdz!4v1783338502753!5m2!1sfr!2sdz" 
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="strict-origin-when-cross-origin">
