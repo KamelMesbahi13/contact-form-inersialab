@@ -2,7 +2,7 @@
 /**
  * Plugin Name: InersiaLab Contact Form
  * Description: Premium two-column contact form shortcode [inersialab_contact] with AJAX email submission.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: InersiaLab
  * Author URI: https://inersialab.com
  * License: GPL2
@@ -25,7 +25,7 @@ function inersialab_contact_enqueue_assets() {
         'inersialab-contact-script', 
         plugins_url( 'js/script.js', __FILE__ ), 
         array(), 
-        '1.1.0', 
+        '1.1.1', 
         true 
     );
 }
@@ -60,8 +60,8 @@ function inersialab_contact_shortcode_handler( $atts ) {
         'email_lbl'   => $is_english ? 'Email:' : 'Email :',
         'phone_lbl'   => $is_english ? 'Phone:' : 'Téléphone :',
         'email_val'   => 'info@inersialab.com',
-        'phone_val'   => '+1 234 567 78',
-        'note'        => $is_english ? 'Available Monday to Friday, 9 AM - 6 PM GMT' : 'Disponible du lundi au vendredi, de 9 AM - 6 PM GMT',
+        'phone_val'   => '0559 21 22 22',
+        'note'        => $is_english ? 'Available Sunday to Thursday, 9 AM - 5 PM' : 'Disponible du dimanche au jeudi, de 9h à 17h',
         'first_name'  => $is_english ? 'First Name' : 'Prénom',
         'first_placeholder' => $is_english ? 'Enter your first name...' : 'Entrez votre prénom...',
         'last_name'   => $is_english ? 'Last Name' : 'Nom',
@@ -79,23 +79,21 @@ function inersialab_contact_shortcode_handler( $atts ) {
 
     // List of offered services
     $services_options = $is_english ? array(
-        'app_dev'          => 'App Development',
-        'web_dev'          => 'Web Development',
-        'marketing_dig'    => 'Digital Marketing',
-        'branding_id'      => 'Branding & Visual Identity',
-        'seo'              => 'SEO Optimization',
-        'social_media'     => 'Social Media Management',
-        'content_creation' => 'Content Creation',
-        'consulting'       => 'Digital Strategy Consulting',
+        'business_strategy'    => 'Business Strategy',
+        'brand_creation'       => 'Brand Creation',
+        'digital_marketing'    => 'Digital Marketing',
+        'business_development' => 'Business Development',
+        'ai_automation'        => 'AI & Automation',
+        'web_software'         => 'Websites & Software',
+        'videography_ugc'      => 'Videography & UGC',
     ) : array(
-        'app_dev'          => 'Développement d\'application',
-        'web_dev'          => 'Développement web',
-        'marketing_dig'    => 'Marketing digital',
-        'branding_id'      => 'Branding & identité visuelle',
-        'seo'              => 'Référencement SEO',
-        'social_media'     => 'Gestion des réseaux sociaux',
-        'content_creation' => 'Création de contenu',
-        'consulting'       => 'Conseil en stratégie digitale',
+        'business_strategy'    => 'Stratégie business',
+        'brand_creation'       => 'Création de marque',
+        'digital_marketing'    => 'Marketing digital',
+        'business_development' => 'Business Development',
+        'ai_automation'        => 'IA & Automatisation',
+        'web_software'         => 'Sites web & Logiciels',
+        'videography_ugc'      => 'Vidéographie & UGC',
     );
 
     // Pass AJAX URL, security nonce, and language strings to our JavaScript file
@@ -171,9 +169,11 @@ function inersialab_contact_shortcode_handler( $atts ) {
             <!-- Right Side Column: Form Card -->
             <div class="inersialab-contact-right">
                 <div class="inersialab-contact-card">
-                    <form id="inersialab-contact-form" novalidate>
+                    <form id="inersialab-contact-form" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
                         <!-- Nonce & Honeypot Fields -->
-                        <?php wp_nonce_field( 'inersialab_contact_submit', 'inersialab_contact_nonce_field' ); ?>
+                        <?php wp_nonce_field( 'inersialab_contact_submit', 'inersialab_contact_nonce_field', false ); ?>
+                        <input type="hidden" name="action" value="inersialab_send_contact">
+                        <input type="hidden" name="lang" value="<?php echo $is_english ? 'en' : 'fr'; ?>">
                         <div style="display:none !important; position:absolute; left:-9999px;">
                             <label for="inersialab-website">Website</label>
                             <input type="text" name="website" id="inersialab-website" tabindex="-1" autocomplete="off">
@@ -183,12 +183,12 @@ function inersialab_contact_shortcode_handler( $atts ) {
                         <div class="inersialab-form-row">
                             <div class="inersialab-form-group">
                                 <label for="inersialab-first-name" class="inersialab-form-label"><?php echo esc_html( $lang['first_name'] ); ?></label>
-                                <input type="text" name="first_name" id="inersialab-first-name" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['first_placeholder'] ); ?>" required>
+                                <input type="text" name="first_name" id="inersialab-first-name" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['first_placeholder'] ); ?>" maxlength="100" required>
                                 <span class="inersialab-error-msg" id="err-first-name"></span>
                             </div>
                             <div class="inersialab-form-group">
                                 <label for="inersialab-last-name" class="inersialab-form-label"><?php echo esc_html( $lang['last_name'] ); ?></label>
-                                <input type="text" name="last_name" id="inersialab-last-name" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['last_placeholder'] ); ?>" required>
+                                <input type="text" name="last_name" id="inersialab-last-name" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['last_placeholder'] ); ?>" maxlength="100" required>
                                 <span class="inersialab-error-msg" id="err-last-name"></span>
                             </div>
                         </div>
@@ -196,14 +196,14 @@ function inersialab_contact_shortcode_handler( $atts ) {
                         <!-- Full-width Email field -->
                         <div class="inersialab-form-group">
                             <label for="inersialab-email" class="inersialab-form-label"><?php echo esc_html( $lang['email'] ); ?></label>
-                            <input type="email" name="email" id="inersialab-email" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['email_placeholder'] ); ?>" required>
+                            <input type="email" name="email" id="inersialab-email" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['email_placeholder'] ); ?>" maxlength="254" required>
                             <span class="inersialab-error-msg" id="err-email"></span>
                         </div>
 
                         <!-- Full-width Phone field -->
                         <div class="inersialab-form-group">
                             <label for="inersialab-phone" class="inersialab-form-label"><?php echo esc_html( $lang['phone'] ); ?></label>
-                            <input type="tel" name="phone" id="inersialab-phone" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['phone_placeholder'] ); ?>" required>
+                            <input type="tel" name="phone" id="inersialab-phone" class="inersialab-form-control" placeholder="<?php echo esc_attr( $lang['phone_placeholder'] ); ?>" maxlength="30" required>
                             <span class="inersialab-error-msg" id="err-phone"></span>
                         </div>
 
@@ -222,7 +222,7 @@ function inersialab_contact_shortcode_handler( $atts ) {
                         <!-- Full-width Message Textarea -->
                         <div class="inersialab-form-group">
                             <label for="inersialab-message" class="inersialab-form-label"><?php echo esc_html( $lang['message'] ); ?></label>
-                            <textarea name="message" id="inersialab-message" class="inersialab-form-control text-area" placeholder="<?php echo esc_attr( $lang['msg_placeholder'] ); ?>" required></textarea>
+                            <textarea name="message" id="inersialab-message" class="inersialab-form-control text-area" placeholder="<?php echo esc_attr( $lang['msg_placeholder'] ); ?>" maxlength="5000" required></textarea>
                             <span class="inersialab-error-msg" id="err-message"></span>
                         </div>
                         
@@ -234,7 +234,7 @@ function inersialab_contact_shortcode_handler( $atts ) {
                         </div>
                         
                         <!-- AJAX Response Indicator / Messages -->
-                        <div class="inersialab-form-response" id="inersialab-form-response"></div>
+                        <div class="inersialab-form-response" id="inersialab-form-response" role="status" aria-live="polite"></div>
                         
                     </form>
                 </div>
@@ -259,21 +259,23 @@ function inersialab_send_contact_ajax_handler() {
         exit;
     }
 
-    // 2. CSRF Referer Verification
-    $referer  = wp_get_referer();
-    $home_url = home_url();
-    if ( ! $referer || strpos( $referer, $home_url ) !== 0 ) {
-        exit;
-    }
-
-    // 3. Nonce Verification (reject silently)
-    if ( ! isset( $_POST['inersialab_contact_nonce_field'] ) || ! wp_verify_nonce( $_POST['inersialab_contact_nonce_field'], 'inersialab_contact_submit' ) ) {
-        exit;
-    }
-
     // Fetch language code to dynamically translate responses
     $lang_code = isset( $_POST['lang'] ) ? sanitize_text_field( wp_unslash( $_POST['lang'] ) ) : 'en';
     $is_english = ( $lang_code === 'en' );
+    $expired_msg = $is_english ? 'Your session has expired. Please reload the page and try again.' : 'Votre session a expiré. Veuillez recharger la page et réessayer.';
+
+    // 2. CSRF Referer Verification
+    $referer  = wp_get_referer();
+    $home_url = home_url();
+    if ( ! $referer || strpos( $referer, trailingslashit( $home_url ) ) !== 0 ) {
+        wp_send_json_error( array( 'message' => $expired_msg ), 403 );
+    }
+
+    // 3. Nonce Verification
+    $nonce = isset( $_POST['inersialab_contact_nonce_field'] ) ? sanitize_text_field( wp_unslash( $_POST['inersialab_contact_nonce_field'] ) ) : '';
+    if ( ! wp_verify_nonce( $nonce, 'inersialab_contact_submit' ) ) {
+        wp_send_json_error( array( 'message' => $expired_msg ), 403 );
+    }
 
     // 4. Honeypot Check (Silently reject by pretending it was successful)
     if ( ! empty( $_POST['website'] ) ) {
@@ -282,13 +284,8 @@ function inersialab_send_contact_ajax_handler() {
     }
 
     // 5. Rate Limiting (transient count per IP)
-    $ip = '';
-    if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-        $ip_list = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
-        $ip = trim( reset( $ip_list ) );
-    } elseif ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    }
+    // REMOTE_ADDR only: X-Forwarded-For is client-controlled and would let bots bypass the limit.
+    $ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
     $ip = filter_var( $ip, FILTER_VALIDATE_IP );
     if ( ! $ip ) {
         $ip = '0.0.0.0';
@@ -301,8 +298,11 @@ function inersialab_send_contact_ajax_handler() {
     }
     if ( $submit_count >= 10 ) {
         $limit_msg = $is_english ? 'Too many attempts. Please try again in an hour.' : 'Trop de tentatives. Veuillez réessayer dans une heure.';
-        wp_send_json_error( array( 'message' => $limit_msg ) );
+        wp_send_json_error( array( 'message' => $limit_msg ), 429 );
     }
+    // Count every attempt that reaches validation (previously only successful sends were counted)
+    $submit_count++;
+    set_transient( $transient_key, $submit_count, HOUR_IN_SECONDS );
 
     // 6. Fetch and sanitize form data
     $first_name = isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
@@ -318,6 +318,12 @@ function inersialab_send_contact_ajax_handler() {
     // 7. Required Fields Enforcement
     if ( empty( $first_name ) || empty( $last_name ) || empty( $email ) || empty( $phone ) || empty( $service ) || empty( $message ) ) {
         $msg = $is_english ? 'All fields are required.' : 'Tous les champs sont requis.';
+        wp_send_json_error( array( 'message' => $msg ) );
+    }
+
+    // Length limits (match the maxlength attributes on the form)
+    if ( mb_strlen( $first_name ) > 100 || mb_strlen( $last_name ) > 100 || mb_strlen( $email ) > 254 || mb_strlen( $phone ) > 30 || mb_strlen( $message ) > 5000 ) {
+        $msg = $is_english ? 'One or more fields are too long.' : 'Un ou plusieurs champs sont trop longs.';
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
@@ -337,16 +343,21 @@ function inersialab_send_contact_ajax_handler() {
         wp_send_json_error( array( 'message' => $msg ) );
     }
 
+    // Phone check (same rule as the JS: at least 6 digits)
+    if ( strlen( preg_replace( '/[^0-9]/', '', $phone ) ) < 6 ) {
+        $msg = $is_english ? 'Please enter a valid phone number.' : 'Veuillez entrer un numéro de téléphone valide.';
+        wp_send_json_error( array( 'message' => $msg ) );
+    }
+
     // 8. Service Whitelist Validation
     $services_whitelist = array(
-        'app_dev'          => 'App Development',
-        'web_dev'          => 'Web Development',
-        'marketing_dig'    => 'Digital Marketing',
-        'branding_id'      => 'Branding & Visual Identity',
-        'seo'              => 'SEO Optimization',
-        'social_media'     => 'Social Media Management',
-        'content_creation' => 'Content Creation',
-        'consulting'       => 'Digital Strategy Consulting',
+        'business_strategy'    => 'Business Strategy',
+        'brand_creation'       => 'Brand Creation',
+        'digital_marketing'    => 'Digital Marketing',
+        'business_development' => 'Business Development',
+        'ai_automation'        => 'AI & Automation',
+        'web_software'         => 'Websites & Software',
+        'videography_ugc'      => 'Videography & UGC',
     );
 
     if ( ! array_key_exists( $service, $services_whitelist ) ) {
@@ -360,6 +371,8 @@ function inersialab_send_contact_ajax_handler() {
     $to      = 'info@inersialab.com';
     $subject = 'New Contact Message from InersiaLab Website';
     $headers = array( 'Content-Type: text/html; charset=UTF-8' );
+    // Visitor address is used for replies only; From stays the site's default (own domain). Strip CR/LF defensively.
+    $headers[] = 'Reply-To: ' . str_replace( array( "\r", "\n" ), '', $first_name . ' ' . $last_name . ' <' . $email . '>' );
     
     // Email HTML Template (all outputs escaped)
     $body  = '<html><body style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a2550;">';
@@ -378,14 +391,22 @@ function inersialab_send_contact_ajax_handler() {
     $mail_sent = wp_mail( $to, $subject, $body, $headers );
 
     if ( $mail_sent ) {
-        // Increment transient rate limiter count on success
-        $submit_count++;
-        set_transient( $transient_key, $submit_count, HOUR_IN_SECONDS );
-
         $msg = $is_english ? 'Your message has been sent! We will get back to you soon.' : "Votre message a été envoyé ! Nous vous répondrons bientôt.";
         wp_send_json_success( array( 'message' => $msg ) );
     } else {
         $msg = $is_english ? 'An error occurred while sending the email. Please try again later.' : "Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer plus tard.";
         wp_send_json_error( array( 'message' => $msg ) );
     }
+}
+
+// Fresh nonce for pages served from LiteSpeed cache (the nonce printed in cached HTML expires after 12-24h)
+add_action( 'wp_ajax_inersialab_contact_refresh_nonce', 'inersialab_contact_refresh_nonce_ajax_handler' );
+add_action( 'wp_ajax_nopriv_inersialab_contact_refresh_nonce', 'inersialab_contact_refresh_nonce_ajax_handler' );
+
+function inersialab_contact_refresh_nonce_ajax_handler() {
+    nocache_headers();
+    if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+        wp_send_json_error( null, 405 );
+    }
+    wp_send_json_success( array( 'nonce' => wp_create_nonce( 'inersialab_contact_submit' ) ) );
 }

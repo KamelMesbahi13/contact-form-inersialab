@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('inersialab-contact-form');
     if (!form) return;
+    // JS shows its own inline errors; native browser validation is only the no-JS fallback
+    form.noValidate = true;
 
     const firstNameInput = document.getElementById('inersialab-first-name');
     const lastNameInput = document.getElementById('inersialab-last-name');
@@ -181,6 +183,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     };
 
+    // Fetch a fresh nonce: the page HTML may come from LiteSpeed cache with an expired one.
+    // Resolves to null on any failure so the nonce already in the form is used (previous behavior).
+    const refreshNonce = () => {
+        const nonceData = new FormData();
+        nonceData.append('action', 'inersialab_contact_refresh_nonce');
+        return fetch(inersialabContactData.ajax_url, { method: 'POST', body: nonceData, credentials: 'same-origin', cache: 'no-store' })
+            .then(r => (r.ok ? r.json() : null))
+            .then(d => (d && d.success && d.data && d.data.nonce) ? d.data.nonce : null)
+            .catch(() => null);
+    };
+
     // Handle AJAX form submit
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -217,22 +230,30 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('service', serviceInput.value.trim());
         formData.append('message', messageInput.value.trim());
 
-        // 5. Send POST request to admin-ajax.php
-        fetch(inersialabContactData.ajax_url, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response error occurred.');
+        // 5. Get a fresh nonce, then send POST request to admin-ajax.php
+        refreshNonce()
+            .then(freshNonce => {
+                if (freshNonce) {
+                    formData.set('inersialab_contact_nonce_field', freshNonce);
+                    if (nonceInput) nonceInput.value = freshNonce;
                 }
-                return response.json();
+                return fetch(inersialabContactData.ajax_url, {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                });
+            })
+            .then(response => {
+                // Read the JSON message even on 403/429; only non-JSON replies count as connection errors
+                return response.json().catch(() => {
+                    throw new Error('Network response error occurred.');
+                });
             })
             .then(data => {
-                if (data.success) {
+                if (data && data.success) {
                     // Success: Display response and reset fields
                     responseBox.classList.add('show-response', 'success');
-                    responseBox.textContent = data.data.message;
+                    responseBox.textContent = (data.data && data.data.message) || '';
                     form.reset();
                     // Clear all validation states after successful submit
                     fields.forEach(field => {
@@ -244,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Server-side validation or email failure
                     responseBox.classList.add('show-response', 'error');
-                    responseBox.textContent = data.data.message || inersialabContactData.messages.error_general;
+                    responseBox.textContent = (data && data.data && data.data.message) || inersialabContactData.messages.error_general;
                 }
             })
             .catch(err => {
