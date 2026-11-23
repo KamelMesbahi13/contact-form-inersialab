@@ -1,66 +1,78 @@
-/* InersiaLab Contact Form Stylesheet */
+/* InersiaLab Contact Form Stylesheet — Refero Design System + InersiaLab Brand */
 
+/* ==========================================
+   Unlock Parent Elementor / Site Wrappers
+   ========================================== */
+.e-con:has(.inersialab-contact-section),
+.e-con:has(.inersialab-contact-section) > .e-con-inner,
+.inersia-container:has(.inersialab-contact-section) {
+    width: 100% !important;
+    max-width: 100% !important;
+    --width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #F0F4F8 !important;
+}
+
+.e-con:has(.inersialab-contact-section) .elementor-widget:has(.inersialab-contact-section),
+.e-con:has(.inersialab-contact-section) .elementor-widget:has(.inersialab-contact-section) > .elementor-widget-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+}
+
+/* ==========================================
+   Section & Design Tokens
+   ========================================== */
 .inersialab-contact-section {
-    /* Design Tokens */
-    --il-primary-navy: #1a2550;
-    --il-accent-orange: #FF6B35;
-    --il-accent-orange-hover: #ff8557;
-    --il-card-bg: #ffffff;
-    --il-section-bg: #ffffff;
-    --il-input-bg: #f0f2f8;
-    --il-text-dark: #1a2550;
-    --il-text-muted: #8e9cb2;
-    --il-text-light: #1a2550;
-    --il-font-main: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --il-transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --il-bg: #F0F4F8;
+    --il-surface: #FFFFFF;
+    --il-ink: #09192B;
+    --il-muted: #526275;
+    --il-accent: #E76212;
+    --il-accent-hover: #cf550d;
+    --il-border: rgba(9, 25, 43, 0.14);
+    --il-border-subtle: rgba(9, 25, 43, 0.10);
+    --il-radius-card: 17.6px;
+    --il-radius-input: 10px;
+    --il-radius-pill: 9999px;
 
-    background-color: var(--il-section-bg) !important;
-    font-family: var(--il-font-main) !important;
-    padding: 60px 0 !important;
+    background-color: var(--il-bg) !important;
+    font-family: var(--font-main, 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+    padding: 48px 0 88px !important;
     width: 100% !important;
     box-sizing: border-box !important;
-    overflow: hidden;
+    overflow-x: clip;
 }
 
 .inersialab-contact-section * {
     box-sizing: border-box !important;
-    font-family: var(--il-font-main) !important;
+}
+
+.inersialab-contact-section input,
+.inersialab-contact-section select,
+.inersialab-contact-section textarea,
+.inersialab-contact-section button {
+    font-family: inherit;
 }
 
 /* ==========================================
-   Container Grid Layout
+   Container & Editorial Hairline Split
    ========================================== */
-.inersialab-contact-container {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    padding: 0 24px !important;
-    display: grid !important;
-    grid-template-columns: 1.1fr 1fr !important;
-    gap: 80px !important;
-    align-items: center !important;
-}
-
-/* When map is present: both columns stretch to match height */
+.inersialab-contact-container,
 .inersialab-contact-container.inersialab-has-map {
+    width: 100% !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+    padding: 0 80px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr) !important;
+    gap: 0 !important;
     align-items: stretch !important;
-    gap: 48px !important;
-}
-
-/* ==========================================
-   Contact Tag Badge
-   ========================================== */
-.inersialab-contact-tag {
-    display: inline-block !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 2px !important;
-    color: var(--il-accent-orange) !important;
-    background: rgba(255, 107, 53, 0.08) !important;
-    border: 1px solid rgba(255, 107, 53, 0.18) !important;
-    padding: 6px 16px !important;
-    border-radius: 100px !important;
-    margin-bottom: 20px !important;
+    border-top: 1px solid var(--il-border) !important;
+    border-bottom: 1px solid var(--il-border) !important;
 }
 
 /* ==========================================
@@ -70,94 +82,103 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    color: var(--il-text-light) !important;
+    padding: 48px 48px 48px 0 !important;
+    color: var(--il-ink) !important;
+    min-width: 0 !important;
 }
 
-.inersialab-contact-heading {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 46px !important;     
-    line-height: 1.25 !important;
-    color: #1C244B !important;
-    letter-spacing: -1px !important;
-    text-transform: none !important;
-    margin: 0 0 24px 0 !important;
+/* Inherit global site h2 & p typography (font-size / font-weight / font-family) */
+h2.inersialab-contact-heading {
+    color: var(--il-ink) !important;
+    margin: 0 0 18px 0 !important;
 }
 
-.inersialab-contact-desc {
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    line-height: 1.65 !important;
-    color: #5a6580 !important;
-    margin: 0 0 36px 0 !important;
-    max-width: 460px !important;
+p.inersialab-contact-desc {
+    color: var(--il-muted) !important;
+    margin: 0 0 28px 0 !important;
+    max-width: 100% !important;
 }
 
 /* ==========================================
-   Info Items with Icons
+   Info Items — Hairline Rows
    ========================================== */
 .inersialab-contact-info-list {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
-    margin-bottom: 24px !important;
+    gap: 0 !important;
+    margin: 0 0 24px 0 !important;
     width: 100% !important;
+    border-bottom: 1px solid var(--il-border-subtle) !important;
 }
 
 .inersialab-info-item {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
+    padding: 14px 0 !important;
+    border-top: 1px solid var(--il-border-subtle) !important;
+    width: 100% !important;
 }
 
 .inersialab-info-text {
     display: flex !important;
-    flex-direction: column !important;
-    gap: 2px !important;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 4px 10px !important;
+    width: 100% !important;
 }
 
 .inersialab-info-label {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    color: rgba(26, 37, 80, 0.5) !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: var(--il-muted) !important;
 }
 
 .inersialab-info-value {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    color: var(--il-text-light) !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    color: var(--il-ink) !important;
     text-decoration: none !important;
-    transition: var(--il-transition-smooth) !important;
+    transition: color 0.2s ease !important;
     direction: ltr !important;
     display: inline-block !important;
 }
 
 .inersialab-info-value:hover {
-    color: var(--il-accent-orange) !important;
+    color: var(--il-accent) !important;
+    text-decoration: none !important;
 }
 
 /* ==========================================
-   Availability Note
+   Availability Note Pill
    ========================================== */
 .inersialab-contact-note {
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    color: rgba(26, 37, 80, 0.5) !important;
-    margin-bottom: 0 !important;
-    padding: 10px 16px !important;
-    background: rgba(26, 37, 80, 0.03) !important;
-    border-radius: 10px !important;
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    color: var(--il-muted) !important;
+    margin: 0 !important;
+    padding: 8px 16px !important;
+    background-color: var(--il-surface) !important;
+    border: 1px solid rgba(9, 25, 43, 0.12) !important;
+    border-radius: var(--il-radius-pill) !important;
 }
 
 .inersialab-contact-note svg {
+    width: 14px !important;
+    height: 14px !important;
     min-width: 14px !important;
-    opacity: 0.6 !important;
+    color: var(--il-muted) !important;
+    flex-shrink: 0 !important;
 }
 
 /* ==========================================
@@ -165,136 +186,44 @@
    ========================================== */
 .inersialab-map-wrapper {
     margin-top: 28px !important;
-    border-radius: 20px !important;
+    border-radius: var(--il-radius-card) !important;
+    border: 1px solid var(--il-border) !important;
+    box-shadow: none !important;
     overflow: hidden !important;
     flex: 1 !important;
     width: 100% !important;
-    min-height: 280px !important;
-    box-shadow: 0 8px 30px rgba(13, 27, 42, 0.08) !important;
-    border: 1px solid rgba(13, 27, 42, 0.06) !important;
+    min-height: 260px !important;
+    background-color: var(--il-surface) !important;
 }
 
 .inersialab-map-wrapper iframe {
     width: 100% !important;
     height: 100% !important;
-    min-height: 280px !important;
+    min-height: 260px !important;
     border: 0 !important;
     display: block !important;
 }
 
 /* ==========================================
-   Submit Button
-   ========================================== */
-.inersialab-btn-livechat,
-.inersialab-btn-submit {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    position: relative !important;
-    width: 192px !important;
-    height: 56px !important;
-    padding: 0 !important;
-    background-color: #ffffff !important;
-    color: #060D14 !important;
-    border: 1.5px solid rgba(30, 58, 95, 0.12) !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
-    font-family: var(--il-font-main) !important;
-    font-size: 15px !important;
-    font-weight: 500 !important;
-    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
-    box-shadow: 0 4px 12px rgba(13, 27, 42, 0.05) !important;
-}
-
-.inersialab-btn-livechat {
-    margin-top: 10px !important;
-}
-
-.inersialab-btn-livechat:hover,
-.inersialab-btn-submit:hover {
-    border-color: transparent !important;
-    color: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(244, 96, 54, 0.15) !important;
-}
-
-.inersialab-btn-livechat::before,
-.inersialab-btn-submit::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 4px !important;
-    top: 4px !important;
-    height: 48px !important; 
-    width: 48px !important;  
-    background-color: #F46036 !important;
-    border-radius: 12px !important;
-    z-index: 1 !important;
-    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-
-.inersialab-btn-livechat:hover::before,
-.inersialab-btn-submit:hover::before {
-    width: calc(100% - 8px) !important; 
-}
-
-.inersialab-btn-livechat::after,
-.inersialab-btn-submit::after {
-    content: '' !important;
-    position: absolute !important;
-    left: 16px !important; 
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 24px !important;
-    height: 24px !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z' fill='%23ffffff'/%3E%3Cpath d='m786.752 512-265.408-265.344a32 32 0 0 1 45.312-45.312l288 288a32 32 0 0 1 0 45.312l-288 288a32 32 0 1 1-45.312-45.312L786.752 512z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    z-index: 2 !important;
-    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-
-.inersialab-btn-livechat:hover::after,
-.inersialab-btn-submit:hover::after {
-    left: 50% !important; 
-    transform: translate(-50%, -50%) !important;
-}
-
-.inersialab-btn-text {
-    display: inline-block !important;
-    transform: translateX(24px) !important;
-    opacity: 1 !important;
-    transition: all 0.75s cubic-bezier(0.25, 1, 0.5, 1) !important;
-    z-index: 3 !important;
-}
-
-.inersialab-btn-livechat:hover .inersialab-btn-text,
-.inersialab-btn-submit:hover .inersialab-btn-text {
-    transform: translateX(50px) !important;
-    opacity: 0 !important;
-}
-
-/* ==========================================
-   Right Column Card Styling
+   Right Column & Form Card Styling
    ========================================== */
 .inersialab-contact-right {
     display: flex !important;
-    justify-content: flex-end !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
     width: 100% !important;
+    min-width: 0 !important;
+    padding: 48px 0 48px 48px !important;
+    border-left: 1px solid var(--il-border) !important;
 }
 
 .inersialab-contact-card {
-    background-color: var(--il-card-bg) !important;
-    border-radius: 28px !important;
-    padding: 32px 36px !important;
+    background-color: var(--il-surface) !important;
+    border: 1px solid var(--il-border) !important;
+    border-radius: var(--il-radius-card) !important;
+    box-shadow: none !important;
+    padding: 36px !important;
     width: 100% !important;
-    max-width: 520px !important;
-    box-shadow: 0 20px 50px rgba(13, 27, 42, 0.08) !important;
-    border: 1px solid rgba(13, 27, 42, 0.06) !important;
-}
-
-/* When map is present, make card fill the full column */
-.inersialab-has-map .inersialab-contact-card {
     max-width: 100% !important;
 }
 
@@ -304,7 +233,7 @@
 .inersialab-form-row {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 20px !important;
+    gap: 18px !important;
 }
 
 .inersialab-form-group {
@@ -315,238 +244,325 @@
 }
 
 .inersialab-form-label {
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: var(--il-text-dark) !important;
-    margin-bottom: 8px !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    color: var(--il-ink) !important;
+    margin: 0 0 8px 0 !important;
     text-align: left !important;
     display: inline-block !important;
 }
 
-.inersialab-form-control {
-    background-color: var(--il-input-bg) !important;
-    color: var(--il-text-dark) !important;
-    font-family: var(--il-font-main) !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    border: 1px solid rgba(26, 37, 80, 0.08) !important;
-    border-radius: 12px !important;
-    padding: 11px 16px !important;
+/* High specificity to beat Hello Elementor & .elementor-kit-73 resets */
+.inersialab-contact-section .inersialab-form-control {
+    background-color: var(--il-bg) !important;
+    color: var(--il-ink) !important;
+    font-family: inherit !important;
+    font-size: 14.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.45 !important;
+    border: 1px solid var(--il-border) !important;
+    border-radius: var(--il-radius-input) !important;
+    padding: 12px 16px !important;
+    margin: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
     outline: none !important;
-    transition: var(--il-transition-smooth) !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-.inersialab-form-control::placeholder {
-    color: var(--il-text-muted) !important;
+.inersialab-contact-section .inersialab-form-control::placeholder {
+    color: var(--il-muted) !important;
     opacity: 1 !important;
 }
 
-.inersialab-form-control:focus {
-    background-color: var(--il-card-bg) !important;
-    border-color: var(--il-accent-orange) !important;
+.inersialab-contact-section .inersialab-form-control:focus {
+    background-color: var(--il-surface) !important;
+    border-color: var(--il-accent) !important;
+    box-shadow: 0 0 0 3px rgba(231, 98, 18, 0.12) !important;
+    outline: none !important;
 }
 
-.inersialab-form-control.text-area {
-    min-height: 100px !important;
+.inersialab-contact-section .inersialab-form-control.text-area {
+    min-height: 120px !important;
     resize: vertical !important;
 }
 
-.inersialab-form-control.select-field {
-    font-family: var(--il-font-main) !important;
+/* Single-line, single-chevron Select control (beats Elementor Kit select rules) */
+.inersialab-contact-section select.inersialab-form-control.select-field,
+#inersialab-contact-form select#inersialab-service {
     appearance: none !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a2550' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    line-height: 1.3 !important;
+    padding: 0 44px 0 16px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    background-color: var(--il-bg) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2309192B' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
     background-repeat: no-repeat !important;
-    background-position: right 18px center !important;
-    background-size: 16px !important;
-    padding-right: 48px !important;
+    background-position: right 16px center !important;
+    background-size: 16px 16px !important;
     cursor: pointer !important;
+}
+
+.inersialab-contact-section select.inersialab-form-control.select-field:focus,
+#inersialab-contact-form select#inersialab-service:focus {
+    background-color: var(--il-surface) !important;
+}
+
+.inersialab-contact-section select.inersialab-form-control.select-field::-ms-expand,
+#inersialab-contact-form select#inersialab-service::-ms-expand {
+    display: none !important;
+}
+
+.inersialab-contact-section select.inersialab-form-control.select-field::before,
+.inersialab-contact-section select.inersialab-form-control.select-field::after {
+    content: none !important;
+    display: none !important;
+}
+
+.inersialab-contact-section select.inersialab-form-control.select-field option {
+    color: var(--il-ink);
+    background-color: var(--il-surface);
 }
 
 /* ==========================================
    Input Error & Valid States
    ========================================== */
 .inersialab-error-msg {
-    color: #ff4d4d !important;
-    font-size: 11px !important;
+    color: #dc2626 !important;
+    font-size: 12px !important;
     font-weight: 500 !important;
+    line-height: 1.35 !important;
     margin-top: 5px !important;
-    margin-left: 4px !important;
-    min-height: 14px !important;
+    margin-left: 2px !important;
+    min-height: 16px !important;
     transition: opacity 0.2s ease !important;
     opacity: 0;
 }
 
-.inersialab-form-control.invalid-field {
-    border-color: #ff4d4d !important;
+.inersialab-contact-section .inersialab-form-control.invalid-field,
+.inersialab-contact-section .inersialab-form-control.invalid-field:focus {
+    border-color: #dc2626 !important;
 }
 
-.inersialab-form-control.invalid-field:focus {
-    border-color: #ff4d4d !important;
+.inersialab-contact-section .inersialab-form-control.invalid-field:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
 }
 
-.inersialab-form-control.valid-field {
-    border-color: #22c55e !important;
+.inersialab-contact-section .inersialab-form-control.valid-field {
+    border-color: #16a34a !important;
 }
 
 /* ==========================================
-   Submit Row Layout
+   Submit Row & Unified Refero Pill Button
    ========================================== */
 .inersialab-form-submit-row {
     display: flex !important;
     justify-content: flex-end !important;
-    margin-top: 10px !important;
+    margin-top: 8px !important;
 }
 
-/* Disabled loading states */
-.inersialab-btn-submit:disabled {
-    background-color: var(--il-text-muted) !important;
+.inersialab-contact-section .inersialab-btn-submit,
+#inersialab-contact-form #inersialab-submit-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    background-color: var(--il-accent) !important;
+    color: #FFFFFF !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--il-radius-pill) !important;
+    padding: 13px 32px !important;
+    width: auto !important;
+    min-width: 190px !important;
+    height: auto !important;
+    min-height: 48px !important;
+    font-family: inherit !important;
+    font-size: 15.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    overflow: visible !important;
+    transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+.inersialab-contact-section .inersialab-btn-submit::before,
+.inersialab-contact-section .inersialab-btn-submit::after,
+#inersialab-contact-form #inersialab-submit-btn::before,
+#inersialab-contact-form #inersialab-submit-btn::after {
+    content: none !important;
+    display: none !important;
+}
+
+.inersialab-contact-section .inersialab-btn-submit:hover,
+#inersialab-contact-form #inersialab-submit-btn:hover {
+    background-color: var(--il-accent-hover) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+    transform: translateY(-2px) !important;
+    box-shadow: none !important;
+}
+
+.inersialab-contact-section .inersialab-btn-submit:focus-visible,
+#inersialab-contact-form #inersialab-submit-btn:focus-visible {
+    outline: 2px solid var(--il-accent) !important;
+    outline-offset: 2px !important;
+}
+
+.inersialab-contact-section .inersialab-btn-text,
+#inersialab-contact-form #inersialab-submit-btn .inersialab-btn-text {
+    display: inline-block !important;
+    color: #FFFFFF !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+}
+
+.inersialab-contact-section .inersialab-btn-submit:hover .inersialab-btn-text,
+#inersialab-contact-form #inersialab-submit-btn:hover .inersialab-btn-text {
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+.inersialab-contact-section .inersialab-btn-submit:disabled,
+#inersialab-contact-form #inersialab-submit-btn:disabled {
+    background-color: var(--il-muted) !important;
+    color: #FFFFFF !important;
+    opacity: 0.78 !important;
     box-shadow: none !important;
     cursor: not-allowed !important;
     transform: none !important;
 }
 
-.inersialab-btn-submit:disabled::before {
-    background-color: var(--il-text-muted) !important;
-}
-
 /* ==========================================
-   Form Ajax Response Styling
+   Form AJAX Response Styling
    ========================================== */
 .inersialab-form-response {
     margin-top: 20px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
     line-height: 1.5 !important;
-    border-radius: 12px !important;
+    border-radius: var(--il-radius-input) !important;
     padding: 0 !important;
     height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    transition: opacity 0.25s ease !important;
 }
 
 .inersialab-form-response.show-response {
-    padding: 16px 20px !important;
+    padding: 14px 18px !important;
     height: auto !important;
     opacity: 1 !important;
 }
 
 .inersialab-form-response.success {
-    background-color: rgba(34, 197, 94, 0.12) !important;
+    background-color: rgba(22, 163, 74, 0.10) !important;
     color: #15803d !important;
-    border: 1px solid rgba(34, 197, 94, 0.25) !important;
+    border: 1px solid rgba(22, 163, 74, 0.25) !important;
 }
 
 .inersialab-form-response.error {
-    background-color: rgba(239, 68, 68, 0.12) !important;
+    background-color: rgba(220, 38, 38, 0.10) !important;
     color: #b91c1c !important;
-    border: 1px solid rgba(239, 68, 68, 0.25) !important;
+    border: 1px solid rgba(220, 38, 38, 0.25) !important;
 }
 
 /* ==========================================
    Responsive Rules
    ========================================== */
-@media (max-width: 1024px) {
-    .inersialab-contact-container {
-        gap: 40px !important;
+@media (max-width: 1399px) {
+    .inersialab-contact-container,
+    .inersialab-contact-container.inersialab-has-map {
+        max-width: 1060px !important;
+        padding: 0 48px !important;
     }
-    .inersialab-contact-heading {
-        font-size: 38px !important;
+
+    .inersialab-contact-left {
+        padding: 48px 40px 48px 0 !important;
+    }
+
+    .inersialab-contact-right {
+        padding: 48px 0 48px 40px !important;
     }
 }
 
 @media (max-width: 991px) {
-    .inersialab-contact-container {
-        grid-template-columns: 1fr !important;
-        gap: 32px !important;
-    }
+    .inersialab-contact-container,
     .inersialab-contact-container.inersialab-has-map {
-        gap: 32px !important;
+        max-width: 100% !important;
+        padding: 0 48px !important;
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
     }
+
     .inersialab-contact-left {
-        align-items: center !important;
-        text-align: center !important;
+        padding: 32px 0 !important;
+        align-items: flex-start !important;
+        text-align: left !important;
     }
-    .inersialab-contact-heading {
-        margin-bottom: 16px !important;
-    }
-    .inersialab-contact-desc {
-        max-width: 100% !important;
-        margin-bottom: 24px !important;
-    }
-    .inersialab-contact-info-list {
-        gap: 16px !important;
-        margin-bottom: 20px !important;
-    }
-    .inersialab-info-item {
-        justify-content: center !important;
-    }
-    .inersialab-contact-note {
-        justify-content: center !important;
-        margin-bottom: 0 !important;
-    }
+
     .inersialab-contact-right {
-        justify-content: center !important;
+        padding: 32px 0 !important;
+        border-left: none !important;
+        border-top: 1px solid var(--il-border) !important;
     }
+
     .inersialab-contact-card {
         max-width: 100% !important;
     }
-    .inersialab-form-submit-row {
-        justify-content: center !important;
-    }
-    .inersialab-map-wrapper {
-        min-height: 300px !important;
-    }
+
+    .inersialab-map-wrapper,
     .inersialab-map-wrapper iframe {
-        min-height: 300px !important;
+        min-height: 280px !important;
     }
 }
 
-@media (max-width: 768px) {
-    .inersialab-contact-heading {
-        font-size: 32px !important;
-    }
-    .inersialab-contact-container {
-        gap: 28px !important;
-    }
-    .inersialab-info-value {
-        font-size: 15px !important;
-    }
-}
-
-@media (max-width: 560px) {
+@media (max-width: 576px) {
     .inersialab-contact-section {
-        padding: 36px 0 !important;
+        padding: 32px 0 64px !important;
     }
-    .inersialab-contact-container {
-        gap: 24px !important;
+
+    .inersialab-contact-container,
+    .inersialab-contact-container.inersialab-has-map {
+        padding: 0 24px !important;
     }
+
+    .inersialab-contact-left,
+    .inersialab-contact-right {
+        padding: 28px 0 !important;
+    }
+
     .inersialab-contact-card {
-        padding: 24px 18px !important;
-        border-radius: 16px !important;
+        padding: 24px 20px !important;
     }
+
     .inersialab-form-row {
         grid-template-columns: 1fr !important;
         gap: 0 !important;
     }
-    .inersialab-info-value {
-        font-size: 14px !important;
+
+    .inersialab-form-submit-row {
+        justify-content: stretch !important;
     }
-    .inersialab-map-wrapper {
-        min-height: 240px !important;
-        border-radius: 14px !important;
+
+    .inersialab-contact-section .inersialab-btn-submit,
+    #inersialab-contact-form #inersialab-submit-btn {
+        width: 100% !important;
     }
+
+    .inersialab-map-wrapper,
     .inersialab-map-wrapper iframe {
         min-height: 240px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .inersialab-contact-heading {
-        font-size: 27px !important;
-        letter-spacing: -0.5px !important;
     }
 }

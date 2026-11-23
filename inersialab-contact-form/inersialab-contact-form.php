@@ -2,7 +2,7 @@
 /**
  * Plugin Name: InersiaLab Contact Form
  * Description: Premium two-column contact form shortcode [inersialab_contact] with AJAX email submission.
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: InersiaLab
  * Author URI: https://inersialab.com
  * License: GPL2
@@ -19,7 +19,7 @@ function inersialab_contact_enqueue_assets() {
         'inersialab-contact-style', 
         plugins_url( 'css/style.css', __FILE__ ), 
         array(), 
-        '1.1.0' 
+        '1.2.0' 
     );
     wp_register_script( 
         'inersialab-contact-script', 
@@ -44,18 +44,13 @@ function inersialab_contact_shortcode_handler( $atts ) {
     wp_enqueue_style( 'inersialab-contact-style' );
     wp_enqueue_script( 'inersialab-contact-script' );
 
-    // Enqueue Montserrat font if it hasn't been enqueued yet
-    if ( ! wp_style_is( 'google-font-montserrat', 'enqueued' ) ) {
-        wp_enqueue_style( 'google-font-montserrat', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap', array(), null );
-    }
-
     // Detect if current page context is French based on url containing '/fr' (otherwise default to English)
     $uri = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '';
     $is_english = ! preg_match( '#(/fr/|/fr$|/fr\?)#', $uri );
 
     // Translation Dictionary — English (default) / French (/fr)
     $lang = array(
-        'heading'     => $is_english ? 'Get in —<br>touch with us' : 'Prenez —<br>contact avec nous',
+        'heading'     => $is_english ? 'Get in — touch with us' : 'Prenez — contact avec nous',
         'desc'        => $is_english ? 'We are here to help! Whether you have a question about our services, need help with your account, or want to share your feedback, our team is ready to assist you.' : "Nous sommes là pour vous aider ! Que vous ayez une question sur nos services, besoin d'aide avec votre compte ou que vous souhaitiez nous faire part de vos commentaires, notre équipe est prête à vous aider.",
         'email_lbl'   => $is_english ? 'Email:' : 'Email :',
         'phone_lbl'   => $is_english ? 'Phone:' : 'Téléphone :',
@@ -125,10 +120,7 @@ function inersialab_contact_shortcode_handler( $atts ) {
             
             <!-- Left Side Column: Info and Heading -->
             <div class="inersialab-contact-left">
-                <!-- Contact tag badge -->
-                <span class="inersialab-contact-tag"><?php echo $is_english ? 'Contact' : 'Contact'; ?></span>
-
-                <h1 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h1>
+                <h2 class="inersialab-contact-heading"><?php echo wp_kses_post( $lang['heading'] ); ?></h2>
                 <p class="inersialab-contact-desc">
                     <?php echo esc_html( $lang['desc'] ); ?>
                 </p>
@@ -158,6 +150,7 @@ function inersialab_contact_shortcode_handler( $atts ) {
                 <div class="inersialab-map-wrapper">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.8388169288223!2d3.4590144!3d36.7504398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8473d4b5a5dc07ff%3A0xd608fa6d0553a078!2sInersiaLab!5e0!3m2!1sfr!2sdz!4v1783338502753!5m2!1sfr!2sdz" 
+                        data-no-lazy="1"
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="strict-origin-when-cross-origin">
